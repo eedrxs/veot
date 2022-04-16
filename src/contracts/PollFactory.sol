@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
 import "./utils/Counters.sol";
-import "./utils/PollData.sol";
+import "./PollData.sol";
 import "./Poll.sol";
 
 contract PollFactory is PollData {
@@ -17,12 +17,11 @@ contract PollFactory is PollData {
     function createPoll(
         string[] memory titleDesc_,
         uint[] memory startEnd_,
-        Category[] memory categories_,
+        Category_[] memory categories_,
         address[] memory participation_
     ) external {
         _pollId.increment();
         _polls[_pollId.current()] = new Poll(_pollId.current(), titleDesc_, startEnd_, categories_, participation_);
-
     }
 
     function queryPoll(uint pollId) public view returns(QueryResult memory) {
