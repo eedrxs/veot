@@ -11,17 +11,21 @@ pragma solidity ^0.8.0;
 import "../PollData.sol";
 
 library PollUtils {
-    // @title assign
-    // @dev Stores categories and options data into the Poll contract's "_categories" state variable
-    function assign(
+    // @title buildPollStructure
+    // @dev Stores categories and their options data into the Poll contract's "_categories" state variable
+    // and grows the "_optionsVotes" two-dimensional array to have the same structure
+    function buildPollStructure(
         PollData.Category[] storage categories,
-        PollData.Category_[] memory _categories) internal {
+        PollData.Category_[] memory _categories,
+        uint[][] storage optionsVotes) internal {
         
         for(uint8 i; i < _categories.length; i++) {
+            optionsVotes.push();
             categories.push();
             categories[i].id = i;
             categories[i].text = _categories[i].text;
             for(uint8 j; j < _categories[i].options.length; j++) {
+                optionsVotes[i].push();
                 categories[i].options.push();
                 categories[i].options[j].id = j;
                 categories[i].options[j].text = _categories[i].options[j].text;

@@ -47,10 +47,13 @@ contract PollData {
     struct QueryResult {
         // Represents the data returned from querying a poll
         string[] titleDesc;     // [Title, Description] of the poll
+        uint[] startEnd;        // [StartTime, EndTime] of the poll
         uint creationTime;      // Time poll was created
+        PollStatus pollStatus;  // Current status of the poll
         uint votes;             // Total number of votes at the time of querying
         bool isOpen;            // Bool that shows if poll is an open or closed poll
-        bool isTimed;           // Bool that shows if poll is a timed or timeless poll
         bool isEligible;        // Bool that shows if the account querying is eligible to participate
     }
+
+    enum PollStatus {Upcoming, Ongoing, Ended}
 }

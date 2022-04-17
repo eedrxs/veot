@@ -15,6 +15,8 @@ contract Poll is PollData {
 
     mapping (uint => address) private _votes;
     mapping (address => uint8) private _voteBalance;
+    uint[][] private _optionsVotes;
+    event voteCasted(uint indexed totalVotes, uint[][] indexed optionsVotes);
 
     uint256 private _pollId;
     address public owner;
@@ -37,40 +39,46 @@ contract Poll is PollData {
         _startEnd = startEnd_;
         _participants.list = participants_;
         _participants.include(participants_);
-        _categories.assign(categories_);
+        _categories.buildPollStructure(categories_, _optionsVotes);
         owner = tx.origin;
         _pollId = pollId_;
         _creationTime = block.timestamp;
     }
 
-    function vote(uint8[] calldata _options) external {
+    modifier isAcceptable() {
         require(isEligible(msg.sender), "You're not eligible for this poll!");
-        require(_voteBalance[msg.sender] <= 1, "You've voted already!");
+        require(_voteBalance[msg.sender] < 1, "You've voted already!");
         if (_startEnd.length != 0) {
             require(block.timestamp >= _startEnd[0], "Poll has not started");
             require(block.timestamp <= _startEnd[1], "Poll has not ended");
         }
+        _;
+    }
 
+    function vote(uint8[] calldata _options) external isAcceptable() {
         for (uint8 i; i < _options.length; i++) {
             _categories[i].options[_options[i]].votes += 1;
+            _optionsVotes[i][_options[i]] += 1;
         }
         _voteId.increment();
         _votes[_voteId.current()] = msg.sender;
+        _voteBalance[msg.sender] += 1;
+        emit voteCasted(_voteId.current(), _optionsVotes);
     }
 
     function getVoteCount() external view returns(uint) {
         return _voteId.current();
     }
 
-    function getPollDetails() external view returns(string[] memory, uint, uint, bool, bool) {
-        return(_titleDesc, _creationTime, _voteId.current(), _participants.list.length == 0, _startEnd.length == 0);
+    function getPollDetails() external view returns(string[] memory, uint[] memory, uint, uint, bool) {
+        return(_titleDesc, _startEnd, _creationTime, _voteId.current(), _participants.list.length == 0);
     }
 
-    function getTotalAndCategoriesAndVotes() external view returns(uint , Category[] memory) {
+    function getOptionsAndVotes() external view returns(uint , Category[] memory) {
         return (_voteId.current(), _categories);
     }
 
-    function getTotalAndOptionsVotes() external view returns(uint , uint32[][] memory) {
+    function getCurrentVotes() external view returns(uint , uint32[][] memory) {
         uint32[][] memory categories = new uint32[][](_categories.length);
         for (uint8 i; i < _categories.length; i++) {
             uint32[] memory options = new uint32[](_categories[i].options.length);
