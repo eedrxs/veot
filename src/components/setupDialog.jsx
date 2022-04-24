@@ -4,6 +4,8 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import TitleDesc from "./setup/titleDesc";
 import TypeOptions from "./setup/typeOptions";
 import Duration from "./setup/duration";
+import Participation from "./setup/participation";
+import Setup from "./setup/setup";
 
 const SetupDialog = () => {
   return (
@@ -13,9 +15,11 @@ const SetupDialog = () => {
           <p>prev</p>
           <FontAwesomeIcon icon={solid("xmark-circle")} className="text-2xl" />
         </div>
-        {/* <TitleDesc /> */}
+        <TitleDesc />
         {/* <TypeOptions /> */}
-        <Duration />
+        {/* <Duration /> */}
+        {/* <Participation /> */}
+        {/* <Setup /> */}
       </div>
     </div>
   );

@@ -3,12 +3,14 @@ import getPolls from "./services/getPolls";
 import { solid, brands } from "@fortawesome/fontawesome-svg-core/import.macro";
 import PollPage from "./components/pollPage";
 import SetupDialog from "./components/setupDialog";
+import ConnectPage from "./components/connectPage";
 
 const App = () => {
+  return <ConnectPage />;
   // return <PollPage />;
   return (
     <React.Fragment>
-      <SetupDialog />
+      {/* <SetupDialog /> */}
       <main className="grid md:grid-rows-3 h-screen w-screen font-sans">
         <div
           id="banner"

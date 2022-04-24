@@ -1,7 +1,6 @@
-import React from "react";
-import ReactDatePicker from "react-datepicker";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Duration = () => {
   return (
@@ -19,21 +18,11 @@ const Duration = () => {
         <label htmlFor="start" className="text-white/70 mb-2">
           Start
         </label>
-        <input
-          type="text"
-          name="start"
-          id="start"
-          className="w-full py-3 pl-4 pr-14 rounded-full mb-6"
-        />
+        <StartTime />
         <label htmlFor="end" className="text-white/70 mb-2">
           End
         </label>
-        <input
-          type="text"
-          name="end"
-          id="end"
-          className="w-full py-3 pl-4 pr-14 rounded-full"
-        />
+        <EndTime />
         <button
           type="button"
           className="absolute bottom-0 w-full bg-gold py-4 rounded-2xl font-medium text-white text-xl"
@@ -42,6 +31,44 @@ const Duration = () => {
         </button>
       </div>
     </React.Fragment>
+  );
+};
+
+const StartTime = () => {
+  const [startDate, setStartDate] = useState(new Date());
+  return (
+    <DatePicker
+      selected={startDate}
+      onChange={date => setStartDate(date)}
+      minDate={new Date()}
+      showMonthDropdown
+      showYearDropdown
+      dropdownMode="select"
+      showTimeInput
+      dateFormat="MMMM d, yyyy h:mm aa"
+      className="w-full py-3 pl-4 pr-14 rounded-full mb-6"
+      placeholderText="Choose when the poll begins"
+      timeInputLabel="Time:"
+    />
+  );
+};
+
+const EndTime = () => {
+  const [startDate, setStartDate] = useState(null);
+  return (
+    <DatePicker
+      selected={startDate}
+      onChange={date => setStartDate(date)}
+      minDate={new Date()}
+      showMonthDropdown
+      showYearDropdown
+      dropdownMode="select"
+      showTimeInput
+      dateFormat="MMMM d, yyyy h:mm aa"
+      className="w-full py-3 pl-4 pr-14 rounded-full mb-6"
+      placeholderText="Choose when the poll ends"
+      timeInputLabel="Time:"
+    />
   );
 };
 
