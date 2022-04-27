@@ -27,7 +27,7 @@ async function main() {
   // // STEP 1 ======================================================
   // log("STEP 1 ======================================================");
   // const bytecode = fs.readFileSync(
-  //   "../contracts/bin/PollFactory_sol_PollFactory.bin"
+  //   "../bin/PollFactory_sol_PollFactory.bin"
   // );
   // log("- Done");
 

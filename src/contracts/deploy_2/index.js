@@ -27,7 +27,7 @@ async function main() {
   // // STEP 1 ======================================================
   // log("STEP 1 ======================================================");
   // const bytecode = fs.readFileSync(
-  //   "../contracts/bin/PollFactory_sol_PollFactory.bin"
+  //   "../bin/PollFactory_sol_PollFactory.bin"
   // );
   // log("- Done");
 
@@ -81,16 +81,24 @@ async function main() {
   const contractQueryResult = contractQuerySubmit.getUint256();
   log(`- Current time is: ${new Date(contractQueryResult * 1000)}`);
 
-  // Call contract function
-  const contractExecuteTx = new ContractExecuteTransaction()
+  const contractQueryTx1 = new ContractCallQuery()
     .setContractId(contractId)
     .setGas(100000)
-    .setFunction(
-      "createPoll",
-      new ContractFunctionParameters()
-        .addStringArray(["Poll 1, Just a poll"])
-        .addUint256Array([])
-        ._addParam()
-    );
+    .setFunction("getPollCount");
+  const contractQuerySubmit1 = await contractQueryTx1.execute(client);
+  const contractQueryResult1 = contractQuerySubmit1.getUint256();
+  log(`- Current poll count is ${contractQueryResult1}`);
+
+  // Call contract function
+  // const contractExecuteTx = new ContractExecuteTransaction()
+  //   .setContractId(contractId)
+  //   .setGas(100000)
+  //   .setFunction(
+  //     "createPoll",
+  //     new ContractFunctionParameters()
+  //       .addStringArray(["Poll 1, Just a poll"])
+  //       .addUint256Array([])
+  //       ._addParam()
+  //   );
 }
 main();

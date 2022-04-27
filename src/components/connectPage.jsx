@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { ApiSession } from "@buidlerlabs/hedera-strato-js";
 
 function log(stuff) {
   console.log(stuff);
@@ -7,10 +8,10 @@ function log(stuff) {
 let appMetadata = {
   name: "Veot",
   description: "A decentralised polling platform built on the Hedera Hashgraph",
-  icon: "https://absolute.url/to/icon.png"
+  icon: "https://www.hashpack.app/img/logo.svg"
 };
 
-const saveData = {
+let saveData = {
   topic: "",
   pairingString: "",
   privateKey: "",
@@ -18,30 +19,70 @@ const saveData = {
   pairedAccounts: []
 };
 
+function loadLocalData() {
+  let foundData = localStorage.getItem("veotData");
+
+  if (foundData) {
+    saveData = JSON.parse(foundData);
+    return true;
+  } else return false;
+}
+
 const ConnectPage = ({ hashconnect, onAccount }) => {
   const connect = async () => {
-    //first init and store the private for later
-    let initData = await hashconnect.init(appMetadata);
-    saveData.privateKey = initData.privKey;
+    if (!loadLocalData()) {
+      //first init and store the private for later
+      let initData = await hashconnect.init(appMetadata);
+      saveData.privateKey = initData.privKey;
 
-    //then connect, storing the new topic for later
-    const state = await hashconnect.connect();
-    saveData.topic = state.topic;
+      //then connect, storing the new topic for later
+      const state = await hashconnect.connect();
+      saveData.topic = state.topic;
 
-    //generate a pairing string, which you can display and generate a QR code from
-    saveData.pairingString = hashconnect.generatePairingString(
-      state,
-      "testnet",
-      true
-    );
+      //generate a pairing string, which you can display and generate a QR code from
+      saveData.pairingString = hashconnect.generatePairingString(
+        state,
+        "testnet",
+        true
+      );
 
-    //find any supported local wallets
-    hashconnect.findLocalWallets();
+      //find any supported local wallets
+      hashconnect.findLocalWallets();
 
-    hashconnect.foundExtensionEvent.once(walletMetadata => {
-      hashconnect.connectToLocalWallet(saveData.pairingString, walletMetadata);
-      localStorage.setItem("veotData", saveData);
-    });
+      //listen for foundExtensionEvent
+      hashconnect.foundExtensionEvent.once(extensionMetadata => {
+        hashconnect.connectToLocalWallet(
+          saveData.pairingString,
+          extensionMetadata
+        );
+        localStorage.setItem("veotData", saveData);
+      });
+
+      //   // Listen for PairingEvent
+      //   hashconnect.pairingEvent.once(pairingData => {
+      //     saveData.pairedWalletData = pairingData.metadata;
+      //     pairingData.accountIds.forEach(id => {
+      //       if (pairedAccounts.indexOf(id) == -1) pairedAccounts.push(id);
+      //     });
+      //   });
+    } else {
+      //use loaded data for initialization + connection
+      await hashconnect.init(appMetadata, saveData.privateKey);
+      await hashconnect.connect(saveData.topic, saveData.pairedWalletData);
+
+      // const { session } = await ApiSession.default();
+      // const liveContract = await session.getLiveContract({
+      //   id: "0.0.34224232",
+      //   abi: [
+      //     "function pollCount() external view returns (uint256)",
+      //     "function num() view returns (uint256)",
+      //     "function set(uint256 _num)"
+      //   ]
+      // });
+      // const bigNumberGetResult = await liveContract.get();
+
+      // console.log(bigNumberGetResult.toNumber());
+    }
   };
 
   return (
