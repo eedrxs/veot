@@ -8,6 +8,7 @@ import ConnectPage from "./components/connectPage";
 const App = () => {
   const hashconnect = new HashConnect();
   const [account, setAccount] = useState();
+  const [fetchedPolls, fetchPolls] = useState();
 
   return <ConnectPage hashconnect={hashconnect} onConnect={setAccount} />;
   // return <PollPage />;

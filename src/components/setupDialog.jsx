@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
-import TitleDesc from "./setup/titleDesc";
-import TypeOptions from "./setup/typeOptions";
-import Duration from "./setup/duration";
-import Participation from "./setup/participation";
-import Setup from "./setup/setup";
+import {
+  TitleDesc,
+  TypeOptions,
+  Duration,
+  Participation,
+  Setup
+} from "./setup/index";
 
 const SetupDialog = () => {
   return (

@@ -1,9 +1,26 @@
 import React, { useEffect } from "react";
-import { ApiSession } from "@buidlerlabs/hedera-strato-js";
+// import { ApiSession } from "../hedera-strato.js";
 
 function log(stuff) {
   console.log(stuff);
 }
+
+// const { session } = await ApiSession.default({ wallet: { type: "Browser" } });
+// const liveContract = await session.getLiveContract({
+//   id: "0.0.34224232",
+//   abi: [
+//     "function createPoll( string[] memory titleDesc_, uint[] memory startEnd_, Category_[] memory categories_, address[] memory participation_) external",
+//     "function queryPoll(uint pollId) public view returns(QueryResult memory)",
+//     "function fetchPolls(uint pollId, uint8 n) external view returns(QueryResult[] memory)",
+//     "function getPollCount() external view returns(uint)",
+//     "function getPollAddress(uint pollId) external view returns(address)",
+//     "function pollStatus(uint[] memory _startEnd) public view returns(PollStatus)",
+//     "function currentTime() public view returns(uint)"
+//   ]
+// });
+// const bigNumberGetResult = await liveContract.get();
+
+// console.log(bigNumberGetResult.toNumber());
 
 let appMetadata = {
   name: "Veot",
@@ -24,6 +41,7 @@ function loadLocalData() {
 
   if (foundData) {
     saveData = JSON.parse(foundData);
+    log(saveData);
     return true;
   } else return false;
 }
@@ -55,7 +73,7 @@ const ConnectPage = ({ hashconnect, onAccount }) => {
           saveData.pairingString,
           extensionMetadata
         );
-        localStorage.setItem("veotData", saveData);
+        localStorage.setItem("veotData", JSON.stringify(saveData));
       });
 
       //   // Listen for PairingEvent
@@ -69,19 +87,6 @@ const ConnectPage = ({ hashconnect, onAccount }) => {
       //use loaded data for initialization + connection
       await hashconnect.init(appMetadata, saveData.privateKey);
       await hashconnect.connect(saveData.topic, saveData.pairedWalletData);
-
-      // const { session } = await ApiSession.default();
-      // const liveContract = await session.getLiveContract({
-      //   id: "0.0.34224232",
-      //   abi: [
-      //     "function pollCount() external view returns (uint256)",
-      //     "function num() view returns (uint256)",
-      //     "function set(uint256 _num)"
-      //   ]
-      // });
-      // const bigNumberGetResult = await liveContract.get();
-
-      // console.log(bigNumberGetResult.toNumber());
     }
   };
 
