@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { ApiSession, HashPackWallet } from "@buidlerlabs/hedera-strato-js";
+import { ApiSession } from "@buidlerlabs/hedera-strato-js";
+import { HashPackWallet } from "../../libs/hashconnect";
 
 // const { session } = await ApiSession.default({ wallet: { type: "Browser" } });
 // const liveContract = await session.getLiveContract({
@@ -24,67 +25,24 @@ let appMetadata = {
   icon: "https://www.hashpack.app/img/logo.svg"
 };
 
-// let saveData = {
-//   topic: "",
-//   pairingString: "",
-//   privateKey: "",
-//   pairedWalletData: null,
-//   pairedAccounts: []
-// };
+const ConnectPage = ({ setSession }) => {
+  async function connectToHashPack() {
+    let wallet = await HashPackWallet.getConnection(false);
 
-// function loadLocalData() {
-//   let foundData = localStorage.getItem("veotData");
-
-//   if (foundData) {
-//     saveData = JSON.parse(foundData);
-//     log(saveData);
-//     return true;
-//   } else return false;
-// }
-
-const ConnectPage = (/*{ hashconnect, onAccount }*/) => {
-  // const connect = async () => {
-  //   if (!loadLocalData()) {
-  //     //first init and store the private for later
-  //     let initData = await hashconnect.init(appMetadata);
-  //     saveData.privateKey = initData.privKey;
-
-  //     //then connect, storing the new topic for later
-  //     const state = await hashconnect.connect();
-  //     saveData.topic = state.topic;
-
-  //     //generate a pairing string, which you can display and generate a QR code from
-  //     saveData.pairingString = hashconnect.generatePairingString(
-  //       state,
-  //       "testnet",
-  //       true
-  //     );
-
-  //     //find any supported local wallets
-  //     hashconnect.findLocalWallets();
-
-  //     //listen for foundExtensionEvent
-  //     hashconnect.foundExtensionEvent.once(extensionMetadata => {
-  //       hashconnect.connectToLocalWallet(
-  //         saveData.pairingString,
-  //         extensionMetadata
-  //       );
-  //       localStorage.setItem("veotData", JSON.stringify(saveData));
-  //     });
-
-  //     //   // Listen for PairingEvent
-  //     //   hashconnect.pairingEvent.once(pairingData => {
-  //     //     saveData.pairedWalletData = pairingData.metadata;
-  //     //     pairingData.accountIds.forEach(id => {
-  //     //       if (pairedAccounts.indexOf(id) == -1) pairedAccounts.push(id);
-  //     //     });
-  //     //   });
-  //   } else {
-  //     //use loaded data for initialization + connection
-  //     await hashconnect.init(appMetadata, saveData.privateKey);
-  //     await hashconnect.connect(saveData.topic, saveData.pairedWalletData);
-  //   }
-  // };
+    if (!wallet) {
+      // No wallet-session could be recovered. Start a fresh one
+      wallet = await HashPackWallet.newConnection({
+        appMetadata: appMetadata,
+        debug: false,
+        networkName: "testnet"
+      });
+    }
+    window["hedera"] = wallet;
+    const { session } = await ApiSession.default({
+      wallet: { type: "Browser" }
+    });
+    setSession(session);
+  }
 
   return (
     <div className="grid grid-cols-[0_auto] lg:grid-cols-[auto_550px] h-screen w-screen">
@@ -98,7 +56,7 @@ const ConnectPage = (/*{ hashconnect, onAccount }*/) => {
         </p>
         <button
           type="button"
-          // onClick={connect}
+          onClick={connectToHashPack}
           className="bg-gold hover:bg-dgold font-medium py-5 px-12 rounded-3xl mb-10"
         >
           Connect to HashPack Wallet
