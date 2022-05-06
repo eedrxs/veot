@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
-const Setup = () => {
+const FinishSetup = () => {
   return (
     <React.Fragment>
       <h1 className="text-white text-3xl font-medium mt-6 mb-4">
@@ -48,4 +48,4 @@ const Setup = () => {
   );
 };
 
-export default Setup;
+export default FinishSetup;
