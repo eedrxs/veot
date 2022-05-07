@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const TitleDesc = () => {
+const TitleDesc = ({ titleDesc, setTitleDesc }) => {
   return (
     <React.Fragment>
       <h1 className="text-white text-3xl font-medium mt-6 mb-5">
@@ -23,15 +23,15 @@ const TitleDesc = () => {
           name="description"
           id="description"
           className="rounded-2xl p-3 h-30 mb-4 resize-none"
-          cols="30"
-          rows="5"
+          // cols="30"
+          rows="4"
         />
-        <button
+        {/* <button
           type="button"
           className="absolute bottom-0 w-full bg-gold py-4 rounded-2xl font-medium text-white text-xl"
         >
           Next
-        </button>
+        </button> */}
       </div>
     </React.Fragment>
   );

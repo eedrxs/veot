@@ -2,16 +2,28 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const Duration = () => {
+const Duration = ({ isTimed, setIsTimed }) => {
   return (
     <React.Fragment>
       <h1 className="text-white text-3xl font-medium mt-6 mb-4">Duration</h1>
       <div className="flex flex-col relative w-[90%] m-auto font-medium grow">
         <div className="flex flex-row justify-between mb-4">
-          <button className="py-4 w-[45%] border border-white/50 rounded-2xl text-white/50 font-medium">
+          <button
+            className={
+              "py-4 w-[46%] border border-white/40 rounded-2xl font-medium" +
+              (isTimed ? " bg-white/20 text-white/90" : " text-white/50")
+            }
+            onClick={() => setIsTimed(true)}
+          >
             Timed
           </button>
-          <button className="py-4 w-[50%] border border-white/50 rounded-2xl text-white/50 font-medium">
+          <button
+            className={
+              "py-4 w-[49%] border border-white/40 rounded-2xl font-medium" +
+              (!isTimed ? " bg-white/20 text-white/90" : " text-white/50")
+            }
+            onClick={() => setIsTimed(false)}
+          >
             Timeless
           </button>
         </div>
@@ -23,12 +35,12 @@ const Duration = () => {
           End
         </label>
         <EndTime />
-        <button
+        {/* <button
           type="button"
           className="absolute bottom-0 w-full bg-gold py-4 rounded-2xl font-medium text-white text-xl"
         >
           Next
-        </button>
+        </button> */}
       </div>
     </React.Fragment>
   );

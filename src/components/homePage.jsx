@@ -11,18 +11,19 @@ const HomePage = ({ session }) => {
       const pollFactory = await session.getLiveContract({
         id: "0.0.34224232",
         abi: [
-          // "function createPoll( string[] memory titleDesc_, uint[] memory startEnd_, Category_[] memory categories_, address[] memory participation_) external",
-          // "function queryPoll(uint pollId) public view returns(QueryResult memory)",
-          // "function fetchPolls(uint pollId, uint8 n) external view returns(QueryResult[] memory)",
+          "function createPoll(string[] titleDesc_, uint[] startEnd_, tuple(uint8 id, string text, tuple(uint8 id, string text)[] options)[] categories_, address[] participation_) external",
+          "function queryPoll(uint pollId) public view returns(tuple(string[] titleDesc, uint[] startEnd, uint creationTime, uint8 pollStatus, uint votes, bool isOpen, bool isEligible))",
+          "function fetchPolls(uint pollId, uint8 n) external view returns(tuple(string[] titleDesc, uint[] startEnd, uint creationTime, uint8 pollStatus, uint votes, bool isOpen, bool isEligible)[])",
           "function getPollCount() external view returns(uint)",
           "function getPollAddress(uint pollId) external view returns(address)",
-          "function pollStatus(uint[] memory _startEnd) public view returns(PollStatus)",
-          "function currentTime() public view returns(uint)"
+          "function pollStatus(uint[] memory _startEnd) public view returns(uint8)",
+          "function currentTime() public view returns(uint)",
+          "event pollCreated(uint indexed pollCount)"
         ]
       });
-      // console.log(pollFactory);
+      console.log(pollFactory);
       setPollFactory(pollFactory);
-      const pollCount = await pollFactory.getPollCount();
+      // const pollCount = await pollFactory.getPollCount();
       // const liveContract = await session.getLiveContract({
       //   id: "0.0.30771282",
       //   abi: [
@@ -41,7 +42,10 @@ const HomePage = ({ session }) => {
   return (
     <React.Fragment>
       {setupDialog ? (
-        <SetupDialog toggleSetupDialog={toggleSetupDialog} />
+        <SetupDialog
+          toggleSetupDialog={toggleSetupDialog}
+          pollFactory={pollFactory}
+        />
       ) : null}
       <div className="grid md:grid-rows-3 h-screen w-screen font-sans">
         <Banner />

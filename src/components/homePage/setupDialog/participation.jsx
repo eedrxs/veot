@@ -2,16 +2,30 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
-const Participation = () => {
+const Participation = ({ isClosed, setIsClosed }) => {
   return (
     <React.Fragment>
-      <h1 className="text-white text-3xl font-medium mt-6 mb-4">Duration</h1>
+      <h1 className="text-white text-3xl font-medium mt-6 mb-4">
+        Participation
+      </h1>
       <div className="flex flex-col relative w-[90%] m-auto font-medium grow">
         <div className="flex flex-row justify-between mb-4">
-          <button className="py-4 w-[45%] border border-white/50 rounded-2xl text-white/50 font-medium">
+          <button
+            className={
+              "py-4 w-[48%] border border-white/40 rounded-2xl font-medium" +
+              (isClosed ? " bg-white/20 text-white/90" : " text-white/50")
+            }
+            onClick={() => setIsClosed(true)}
+          >
             Closed
           </button>
-          <button className="py-4 w-[50%] border border-white/50 rounded-2xl text-white/50 font-medium">
+          <button
+            className={
+              "py-4 w-[47%] border border-white/40 rounded-2xl font-medium" +
+              (!isClosed ? " bg-white/20 text-white/90" : " text-white/50")
+            }
+            onClick={() => setIsClosed(false)}
+          >
             Open
           </button>
         </div>
@@ -25,12 +39,12 @@ const Participation = () => {
             account addresses of eligible participants
           </p>
         </div>
-        <button
+        {/* <button
           type="button"
           className="absolute bottom-0 w-full bg-gold py-4 rounded-2xl font-medium text-white text-xl"
         >
           Next
-        </button>
+        </button> */}
       </div>
     </React.Fragment>
   );
