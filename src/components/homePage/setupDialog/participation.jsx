@@ -30,21 +30,24 @@ const Participation = ({ isClosed, setIsClosed }) => {
           </button>
         </div>
         <div className="flex flex-col items-center justify-center h-48 px-4 bg-white/10 rounded-2xl text-white">
-          <div className="flex justify-between items-center w-[55%] py-3 px-[2.3rem] bg-white/30 rounded-xl text-lg">
-            <p>Upload</p>
+          <label
+            htmlFor="upload"
+            className="flex justify-between items-center w-[55%] py-3 px-[2.3rem] bg-white/30 hover:bg-white/25 rounded-xl text-lg"
+          >
+            <span>Upload</span>
             <FontAwesomeIcon icon={solid("file-arrow-up")} />
-          </div>
+          </label>
+          <input
+            className="hidden"
+            type="file"
+            id="upload"
+            accept="application/json,.json"
+          />
           <p className="text-[0.55rem] font-normal text-center px-10 mt-4">
             Upload a JSON document with a single array entry containing the
-            account addresses of eligible participants
+            account IDs of eligible participants
           </p>
         </div>
-        {/* <button
-          type="button"
-          className="absolute bottom-0 w-full bg-gold py-4 rounded-2xl font-medium text-white text-xl"
-        >
-          Next
-        </button> */}
       </div>
     </React.Fragment>
   );

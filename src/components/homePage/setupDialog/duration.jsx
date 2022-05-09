@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
-const Duration = ({ isTimed, setIsTimed }) => {
+const Duration = ({ isTimed, setIsTimed, duration, setDuration }) => {
   return (
     <React.Fragment>
       <h1 className="text-white text-3xl font-medium mt-6 mb-4">Duration</h1>
@@ -22,36 +24,42 @@ const Duration = ({ isTimed, setIsTimed }) => {
               "py-4 w-[49%] border border-white/40 rounded-2xl font-medium" +
               (!isTimed ? " bg-white/20 text-white/90" : " text-white/50")
             }
-            onClick={() => setIsTimed(false)}
+            onClick={() => {
+              setDuration({ start: null, end: null });
+              setIsTimed(false);
+            }}
           >
             Timeless
           </button>
         </div>
-        <label htmlFor="start" className="text-white/70 mb-2">
-          Start
-        </label>
-        <StartTime />
-        <label htmlFor="end" className="text-white/70 mb-2">
-          End
-        </label>
-        <EndTime />
-        {/* <button
-          type="button"
-          className="absolute bottom-0 w-full bg-gold py-4 rounded-2xl font-medium text-white text-xl"
-        >
-          Next
-        </button> */}
+        {isTimed ? (
+          <React.Fragment>
+            <label htmlFor="start" className="text-white/70 mb-2">
+              Start
+            </label>
+            <StartTime time={duration} setTime={setDuration} />
+            <label htmlFor="end" className="text-white/70 mb-2">
+              End
+            </label>
+            <EndTime time={duration} setTime={setDuration} />
+          </React.Fragment>
+        ) : (
+          <FontAwesomeIcon
+            icon={solid("infinity")}
+            className="text-white/20 mx-auto mt-8 text-9xl"
+          />
+        )}
       </div>
     </React.Fragment>
   );
 };
 
-const StartTime = () => {
+const StartTime = ({ time, setTime }) => {
   const [startDate, setStartDate] = useState(new Date());
   return (
     <DatePicker
-      selected={startDate}
-      onChange={date => setStartDate(date)}
+      selected={time.start}
+      onChange={date => setTime({ start: date, end: time.end })}
       minDate={new Date()}
       showMonthDropdown
       showYearDropdown
@@ -59,18 +67,18 @@ const StartTime = () => {
       showTimeInput
       dateFormat="MMMM d, yyyy h:mm aa"
       className="w-full py-3 pl-4 pr-14 rounded-full mb-6"
-      placeholderText="Choose when the poll begins"
+      placeholderText="Choose when the poll starts"
       timeInputLabel="Time:"
     />
   );
 };
 
-const EndTime = () => {
+const EndTime = ({ time, setTime }) => {
   const [startDate, setStartDate] = useState(null);
   return (
     <DatePicker
-      selected={startDate}
-      onChange={date => setStartDate(date)}
+      selected={time.end}
+      onChange={date => setTime({ start: time.start, end: date })}
       minDate={new Date()}
       showMonthDropdown
       showYearDropdown

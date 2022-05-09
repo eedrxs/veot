@@ -1,6 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useRef } from "react";
 
 const TitleDesc = ({ titleDesc, setTitleDesc }) => {
+  const titleInput = useRef();
+  const descInput = useRef();
+
   return (
     <React.Fragment>
       <h1 className="text-white text-3xl font-medium mt-6 mb-5">
@@ -11,8 +14,15 @@ const TitleDesc = ({ titleDesc, setTitleDesc }) => {
           Title
         </label>
         <input
+          value={titleDesc.title}
+          onChange={() => {
+            setTitleDesc({
+              title: titleInput.current.value,
+              description: descInput.current.value
+            });
+          }}
+          ref={titleInput}
           type="text"
-          name="title"
           id="title"
           className="rounded-2xl p-3 mb-6"
         />
@@ -20,18 +30,19 @@ const TitleDesc = ({ titleDesc, setTitleDesc }) => {
           Description <i>(optional)</i>
         </label>
         <textarea
-          name="description"
+          value={titleDesc.description}
+          onChange={() => {
+            setTitleDesc({
+              title: titleInput.current.value,
+              description: descInput.current.value
+            });
+          }}
+          ref={descInput}
           id="description"
           className="rounded-2xl p-3 h-30 mb-4 resize-none"
           // cols="30"
           rows="4"
         />
-        {/* <button
-          type="button"
-          className="absolute bottom-0 w-full bg-gold py-4 rounded-2xl font-medium text-white text-xl"
-        >
-          Next
-        </button> */}
       </div>
     </React.Fragment>
   );

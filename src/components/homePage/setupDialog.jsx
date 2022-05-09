@@ -14,10 +14,39 @@ const SetupDialog = ({ toggleSetupDialog, pollFactory }) => {
   const [isBasic, setIsBasic] = useState(true);
   const [isTimed, setIsTimed] = useState(true);
   const [isClosed, setIsClosed] = useState(true);
-  const [titleDesc, setTitleDesc] = useState({ title: "", description: "" });
-  const [options, setOptions] = useState();
-  const [duration, setDuration] = useState();
-  const [addresses, setAddresses] = useState();
+  const [titleDesc, setTitleDesc] = useState({
+    title: "",
+    description: ""
+  });
+  const [categories, setCategories] = useState([
+    { textContent: "", options: [] }
+  ]);
+  const [duration, setDuration] = useState({ start: new Date(), end: null });
+  const [addresses, setAddresses] = useState([]);
+
+  const handleAddOption = (option, categoryId) => {
+    let c = [...categories];
+    c[categoryId].options.push(option);
+    setCategories(c);
+  };
+
+  const handleRemoveOption = (optionId, categoryId) => {
+    let c = [...categories];
+    c[categoryId].options.splice(optionId, 1);
+    setCategories(c);
+  };
+
+  const handleAddCategory = category => {
+    let c = [...categories];
+    c.push({ textContent: category, options: [] });
+    setCategories(c);
+  };
+
+  const handleRemoveCategory = categoryId => {
+    let c = [...categories];
+    c.splice(categoryId, 1);
+    setCategories(c);
+  };
 
   return (
     <div className="fixed top-0 left-0 flex justify-center items-center h-screen w-screen bg-llblue/50 backdrop-blur-[6px] z-50">
@@ -49,9 +78,27 @@ const SetupDialog = ({ toggleSetupDialog, pollFactory }) => {
                 <TitleDesc titleDesc={titleDesc} setTitleDesc={setTitleDesc} />
               );
             case 2:
-              return <TypeOptions isBasic={isBasic} setIsBasic={setIsBasic} />;
+              return (
+                <TypeOptions
+                  isBasic={isBasic}
+                  setIsBasic={setIsBasic}
+                  categories={categories}
+                  setCategories={setCategories}
+                  onAddOption={handleAddOption}
+                  onRemoveOption={handleRemoveOption}
+                  onAddCategory={handleAddCategory}
+                  onRemoveCategory={handleRemoveCategory}
+                />
+              );
             case 3:
-              return <Duration isTimed={isTimed} setIsTimed={setIsTimed} />;
+              return (
+                <Duration
+                  isTimed={isTimed}
+                  setIsTimed={setIsTimed}
+                  duration={duration}
+                  setDuration={setDuration}
+                />
+              );
             case 4:
               return (
                 <Participation isClosed={isClosed} setIsClosed={setIsClosed} />
