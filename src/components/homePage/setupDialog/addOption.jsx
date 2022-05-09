@@ -21,7 +21,7 @@ const AddOption = ({ categoryId, onAddOption }) => {
         }}
       />
       <button
-        className="absolute flex top-2 right-2 text-green text-3xl"
+        className="absolute flex top-2 right-2 text-green hover:text-lgreen text-3xl"
         ref={button}
         onClick={() => {
           onAddOption(input.current.value, categoryId);

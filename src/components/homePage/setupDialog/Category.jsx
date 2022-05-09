@@ -27,7 +27,7 @@ const Category = ({
           />
           <FontAwesomeIcon
             icon={solid("xmark-circle")}
-            className="text-lg text-white/70 absolute right-0 top-0"
+            className="text-lg text-white/70 hover:text-white/50 absolute right-0 top-0"
             onClick={() => onRemoveCategory(categoryId)}
           />
         </div>
@@ -43,7 +43,7 @@ const Category = ({
           />
           <FontAwesomeIcon
             icon={solid("minus-circle")}
-            className="absolute top-2 right-2 text-red-500 text-3xl"
+            className="absolute top-2 right-2 text-red-500 hover:text-red-600 text-3xl"
             onClick={() => onRemoveOption(index, categoryId)}
           />
         </div>

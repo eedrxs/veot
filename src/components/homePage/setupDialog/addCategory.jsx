@@ -22,7 +22,7 @@ const AddCategory = ({ onAddCategory }) => {
       />
       <button
         ref={button}
-        className="absolute flex top-2 right-2 text-green text-3xl"
+        className="absolute flex top-2 right-2 text-green hover:text-lgreen text-3xl"
         onClick={() => {
           onAddCategory(input.current.value);
           input.current.value = "";

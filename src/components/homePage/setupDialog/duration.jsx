@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -55,7 +55,6 @@ const Duration = ({ isTimed, setIsTimed, duration, setDuration }) => {
 };
 
 const StartTime = ({ time, setTime }) => {
-  const [startDate, setStartDate] = useState(new Date());
   return (
     <DatePicker
       selected={time.start}
@@ -74,7 +73,6 @@ const StartTime = ({ time, setTime }) => {
 };
 
 const EndTime = ({ time, setTime }) => {
-  const [startDate, setStartDate] = useState(null);
   return (
     <DatePicker
       selected={time.end}

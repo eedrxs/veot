@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import {
@@ -22,7 +22,7 @@ const SetupDialog = ({ toggleSetupDialog, pollFactory }) => {
     { textContent: "", options: [] }
   ]);
   const [duration, setDuration] = useState({ start: new Date(), end: null });
-  const [addresses, setAddresses] = useState([]);
+  const [addresses, setAddresses] = useState(null);
 
   const handleAddOption = (option, categoryId) => {
     let c = [...categories];
@@ -67,7 +67,7 @@ const SetupDialog = ({ toggleSetupDialog, pollFactory }) => {
           )}
           <FontAwesomeIcon
             icon={solid("xmark-circle")}
-            className="text-2xl"
+            className="text-2xl hover:text-white/50"
             onClick={() => toggleSetupDialog(false)}
           />
         </div>
@@ -101,7 +101,12 @@ const SetupDialog = ({ toggleSetupDialog, pollFactory }) => {
               );
             case 4:
               return (
-                <Participation isClosed={isClosed} setIsClosed={setIsClosed} />
+                <Participation
+                  isClosed={isClosed}
+                  setIsClosed={setIsClosed}
+                  addresses={addresses}
+                  setAddresses={setAddresses}
+                />
               );
             case 5:
               return <FinishSetup />;
@@ -112,7 +117,9 @@ const SetupDialog = ({ toggleSetupDialog, pollFactory }) => {
           type="button"
           className={
             "absolute bottom-8 w-[90%] py-4 rounded-2xl font-medium text-white text-xl" +
-            (page !== 5 ? " bg-gold" : " bg-green")
+            (page !== 5
+              ? " bg-gold hover:bg-dgold"
+              : " bg-green hover:bg-lgreen")
           }
           onClick={page !== 5 ? () => page < 5 && setPage(page + 1) : null}
         >

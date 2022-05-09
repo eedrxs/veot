@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
+import { AccountId } from "@hashgraph/sdk";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import {
+  faFileArrowUp,
+  faSpinner,
+  faCircleCheck,
+  faBoxOpen
+} from "@fortawesome/free-solid-svg-icons";
 
-const Participation = ({ isClosed, setIsClosed }) => {
+const Participation = ({ isClosed, setIsClosed, addresses, setAddresses }) => {
+  const [currentIcon, changeCurrentIcon] = useState({
+    icon: addresses ? faCircleCheck : faFileArrowUp,
+    spin: false
+  });
+
   return (
     <React.Fragment>
       <h1 className="text-white text-3xl font-medium mt-6 mb-4">
@@ -29,25 +40,57 @@ const Participation = ({ isClosed, setIsClosed }) => {
             Open
           </button>
         </div>
-        <div className="flex flex-col items-center justify-center h-48 px-4 bg-white/10 rounded-2xl text-white">
-          <label
-            htmlFor="upload"
-            className="flex justify-between items-center w-[55%] py-3 px-[2.3rem] bg-white/30 hover:bg-white/25 rounded-xl text-lg"
-          >
-            <span>Upload</span>
-            <FontAwesomeIcon icon={solid("file-arrow-up")} />
-          </label>
-          <input
-            className="hidden"
-            type="file"
-            id="upload"
-            accept="application/json,.json"
+        {isClosed ? (
+          <div className="flex flex-col items-center justify-center h-48 px-4 bg-white/10 rounded-2xl text-white">
+            <label
+              htmlFor="upload"
+              className="flex justify-between items-center w-[55%] py-3 px-[2.3rem] bg-white/30 hover:bg-white/25 rounded-xl text-lg"
+            >
+              <span>Upload</span>
+              <FontAwesomeIcon
+                icon={currentIcon.icon}
+                spin={currentIcon.spin}
+              />
+            </label>
+            <input
+              className="hidden"
+              type="file"
+              id="upload"
+              accept="application/json,.json"
+              onChange={event => {
+                changeCurrentIcon({ icon: faSpinner, spin: true });
+                const reader = new FileReader();
+
+                reader.onload = event => {
+                  let [accountIds] = Object.values(
+                    JSON.parse(event.target.result)
+                  );
+                  let accountAddresses = accountIds.map(accountId =>
+                    AccountId.fromString(accountId).toSolidityAddress()
+                  );
+                  setAddresses(accountAddresses);
+                  changeCurrentIcon({ icon: faCircleCheck, spin: false });
+                };
+
+                if (event.target.files[0]) {
+                  reader.readAsText(event.target.files[0]);
+                  return;
+                }
+
+                changeCurrentIcon({ icon: faFileArrowUp, spin: false });
+              }}
+            />
+            <p className="text-[0.55rem] font-normal text-center px-10 mt-4">
+              Upload a JSON document with a single array entry containing the
+              account IDs of eligible participants
+            </p>
+          </div>
+        ) : (
+          <FontAwesomeIcon
+            icon={faBoxOpen}
+            className="text-white/20 mx-auto mt-8 text-9xl"
           />
-          <p className="text-[0.55rem] font-normal text-center px-10 mt-4">
-            Upload a JSON document with a single array entry containing the
-            account IDs of eligible participants
-          </p>
-        </div>
+        )}
       </div>
     </React.Fragment>
   );

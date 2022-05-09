@@ -37,12 +37,6 @@ const FinishSetup = () => {
           />
           <p>Participation</p>
         </div>
-        {/* <button
-          type="button"
-          className="absolute bottom-0 w-full bg-green hover:bg-lgreen py-4 rounded-2xl font-medium text-white text-xl"
-        >
-          Set up Poll
-        </button> */}
       </div>
     </React.Fragment>
   );
