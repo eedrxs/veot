@@ -37,7 +37,7 @@ const Category = ({
         <div className="relative mb-5" key={index}>
           <input
             type="text"
-            value={option}
+            value={option.textContent}
             readOnly
             className="w-full py-3 pl-4 pr-14 focus:outline-0 rounded-full"
           />

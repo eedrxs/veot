@@ -11,7 +11,8 @@ module.exports = webpackConfig => {
 
   alias({
     "@buidlerlabs/hedera-strato-js": "./libs/hedera-strato-js.js",
-    "../../libs/hashconnect": "./libs/hashconnect.js"
+    "../../libs/hashconnect": "./libs/hashconnect.js",
+    "./../../libs/my-contraption-js": "./libs/my-contraption-js.js"
   })(webpackConfig);
 
   return webpackConfig;

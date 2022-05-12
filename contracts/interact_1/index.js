@@ -134,4 +134,5 @@ function decodeFunctionResult(functionName, resultAsBytes) {
   return result;
 }
 
+// getPollCount();
 getPollAddress(1);

@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { ConnectPage, HomePage, PollPage } from "./components/index";
+// import Web3 from "web3";
 
 const App = () => {
-  const [session, setSession] = useState();
+  const [signer, setSigner] = useState();
+  // const [session, setSession] = useState();
+  // const [account, setAccount] = useState({ id: null, privateKey: null });
 
-  if (!session) return <ConnectPage setSession={setSession} />;
+  if (!signer)
+    return <ConnectPage /*setAccount={setAccount}*/ setSigner={setSigner} />;
   return (
     <React.Fragment>
-      <HomePage session={session} />
+      <HomePage /*account={account}*/ signer={signer} />
+      {/* <PollPage /> */}
     </React.Fragment>
   );
 };
