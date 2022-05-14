@@ -9,12 +9,12 @@ let saveData = {
   pairingString: "",
   privateKey: "",
   pairedWalletData: null,
-  pairedAccounts: []
+  pairedAccounts: [],
 };
 let appMetadata = {
   name: "Veot",
   description: "A decentralised polling platform built on the Hedera Hashgraph",
-  icon: "https://www.hashpack.app/img/logo.svg"
+  icon: "https://www.hashpack.app/img/logo.svg",
 };
 
 const loadLocalData = () => {
@@ -126,8 +126,8 @@ const ConnectPage = ({ /*setAccount,*/ setSigner }) => {
   // }
 
   return (
-    <div className="grid grid-cols-[0_auto] lg:grid-cols-[auto_550px] h-screen w-screen">
-      <div className="bg-[url(./images/banner.jpg)] bg-cover"></div>
+    <div className="grid grid-cols-connectpage-sm lg:grid-cols-connectpage h-screen w-screen">
+      <div className="bg-banner bg-cover"></div>
       <div className="flex flex-col justify-center items-center bg-blue text-white text-center">
         <div className="border-2 border-white h-14 w-14 mb-4"></div>
         <p className="font-bold text-7xl mb-14">Veot</p>

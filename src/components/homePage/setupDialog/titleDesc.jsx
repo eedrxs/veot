@@ -9,8 +9,8 @@ const TitleDesc = ({ titleDesc, setTitleDesc }) => {
       <h1 className="text-white text-3xl font-medium mt-6 mb-5">
         Title and Description
       </h1>
-      <div className="flex flex-col relative w-[90%] m-auto font-medium grow">
-        <label htmlFor="title" className="text-white/70 mb-2">
+      <div className="flex flex-col relative w-90p m-auto font-medium flex-grow">
+        <label htmlFor="title" className="text-white text-opacity-70 mb-2">
           Title
         </label>
         <input
@@ -18,7 +18,7 @@ const TitleDesc = ({ titleDesc, setTitleDesc }) => {
           onChange={() => {
             setTitleDesc({
               title: titleInput.current.value,
-              description: descInput.current.value
+              description: descInput.current.value,
             });
           }}
           ref={titleInput}
@@ -26,7 +26,10 @@ const TitleDesc = ({ titleDesc, setTitleDesc }) => {
           id="title"
           className="rounded-2xl p-3 mb-6"
         />
-        <label htmlFor="description" className="text-white/70 mb-2">
+        <label
+          htmlFor="description"
+          className="text-white text-opacity-70 mb-2"
+        >
           Description <i>(optional)</i>
         </label>
         <textarea
@@ -34,7 +37,7 @@ const TitleDesc = ({ titleDesc, setTitleDesc }) => {
           onChange={() => {
             setTitleDesc({
               title: titleInput.current.value,
-              description: descInput.current.value
+              description: descInput.current.value,
             });
           }}
           ref={descInput}

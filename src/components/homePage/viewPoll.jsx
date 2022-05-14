@@ -9,7 +9,7 @@ const ViewPoll = () => {
       <div className="w-10/12 md:w-8/12">
         <input
           type="text"
-          className="py-4 px-8 w-full rounded-2xl focus:outline-none border-gold border-2 placeholder:text-gold mb-4"
+          className="py-4 px-8 w-full rounded-2xl focus:outline-none border-gold border-2 placeholder:gold mb-4"
           placeholder="Enter Poll ID"
         ></input>
         <button

@@ -2,18 +2,20 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { faInfinity } from "@fortawesome/free-solid-svg-icons";
 
 const Duration = ({ isTimed, setIsTimed, duration, setDuration }) => {
   return (
     <React.Fragment>
       <h1 className="text-white text-3xl font-medium mt-6 mb-4">Duration</h1>
-      <div className="flex flex-col relative w-[90%] m-auto font-medium grow">
+      <div className="flex flex-col relative w-90p m-auto font-medium flex-grow">
         <div className="flex flex-row justify-between mb-4">
           <button
             className={
-              "py-4 w-[46%] border border-white/40 rounded-2xl font-medium" +
-              (isTimed ? " bg-white/20 text-white/90" : " text-white/50")
+              "py-4 w-46p border border-white border-opacity-40 rounded-2xl font-medium" +
+              (isTimed
+                ? " bg-white bg-opacity-20 text-white text-opacity-90"
+                : " text-white text-opacity-50")
             }
             onClick={() => setIsTimed(true)}
           >
@@ -21,8 +23,10 @@ const Duration = ({ isTimed, setIsTimed, duration, setDuration }) => {
           </button>
           <button
             className={
-              "py-4 w-[49%] border border-white/40 rounded-2xl font-medium" +
-              (!isTimed ? " bg-white/20 text-white/90" : " text-white/50")
+              "py-4 w-49p border border-white border-opacity-40 rounded-2xl font-medium" +
+              (!isTimed
+                ? " bg-white bg-opacity-20 text-white text-opacity-90"
+                : " text-white text-opacity-50")
             }
             onClick={() => {
               setDuration({ start: null, end: null });
@@ -34,19 +38,19 @@ const Duration = ({ isTimed, setIsTimed, duration, setDuration }) => {
         </div>
         {isTimed ? (
           <React.Fragment>
-            <label htmlFor="start" className="text-white/70 mb-2">
+            <label htmlFor="start" className="text-white text-opacity-70 mb-2">
               Start
             </label>
             <StartTime time={duration} setTime={setDuration} />
-            <label htmlFor="end" className="text-white/70 mb-2">
+            <label htmlFor="end" className="text-white text-opacity-70 mb-2">
               End
             </label>
             <EndTime time={duration} setTime={setDuration} />
           </React.Fragment>
         ) : (
           <FontAwesomeIcon
-            icon={solid("infinity")}
-            className="text-white/20 mx-auto mt-8 text-9xl"
+            icon={faInfinity}
+            className="text-white text-opacity-20 mx-auto mt-8 text-9xl"
           />
         )}
       </div>

@@ -1,6 +1,9 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import {
+  faXmarkCircle,
+  faMinusCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import AddOption from "./addOption";
 
 const Category = ({
@@ -9,13 +12,13 @@ const Category = ({
   isBasic,
   onAddOption,
   onRemoveOption,
-  onRemoveCategory
+  onRemoveCategory,
 }) => {
   return (
     <div
       className={
         "rounded-2xl" +
-        (isBasic ? "" : " pt-4 px-4 mb-4 border-white/50 border")
+        (isBasic ? "" : " pt-4 px-4 mb-4 border-white border-opacity-50 border")
       }
     >
       {isBasic ? null : (
@@ -26,8 +29,8 @@ const Category = ({
             contentEditable={false}
           />
           <FontAwesomeIcon
-            icon={solid("xmark-circle")}
-            className="text-lg text-white/70 hover:text-white/50 absolute right-0 top-0"
+            icon={faXmarkCircle}
+            className="text-lg text-white text-opacity-70 hover:text-white hover:text-opacity-50 absolute right-0 top-0"
             onClick={() => onRemoveCategory(categoryId)}
           />
         </div>
@@ -39,10 +42,10 @@ const Category = ({
             type="text"
             value={option.textContent}
             readOnly
-            className="w-full py-3 pl-4 pr-14 focus:outline-0 rounded-full"
+            className="w-full py-3 pl-4 pr-14 focus:outline-none rounded-full"
           />
           <FontAwesomeIcon
-            icon={solid("minus-circle")}
+            icon={faMinusCircle}
             className="absolute top-2 right-2 text-red-500 hover:text-red-600 text-3xl"
             onClick={() => onRemoveOption(index, categoryId)}
           />

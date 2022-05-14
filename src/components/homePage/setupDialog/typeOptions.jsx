@@ -10,19 +10,21 @@ const TypeOptions = ({
   onAddOption,
   onRemoveOption,
   onAddCategory,
-  onRemoveCategory
+  onRemoveCategory,
 }) => {
   return (
     <React.Fragment>
       <h1 className="text-white text-3xl font-medium mt-6 mb-4">
         Type and Options
       </h1>
-      <div className="flex flex-col relative w-[90%] m-auto font-medium grow">
+      <div className="flex flex-col relative w-90p m-auto font-medium flex-grow">
         <div className="flex flex-row justify-between mb-2">
           <button
             className={
-              "py-4 w-[45%] border border-white/40 rounded-2xl font-medium" +
-              (isBasic ? " bg-white/20 text-white/90" : " text-white/50")
+              "py-4 w-45p border border-white border-opacity-40 rounded-2xl font-medium" +
+              (isBasic
+                ? " bg-white bg-opacity-20 text-white text-opacity-90"
+                : " text-white text-opacity-50")
             }
             onClick={() => {
               setCategories([{ textContent: "", options: [] }]);
@@ -33,8 +35,10 @@ const TypeOptions = ({
           </button>
           <button
             className={
-              "py-4 w-[50%] border border-white/40 rounded-2xl font-medium" +
-              (!isBasic ? " bg-white/20 text-white/90" : " text-white/50")
+              "py-4 w-50p border border-white border-opacity-40 rounded-2xl font-medium" +
+              (!isBasic
+                ? " bg-white bg-opacity-20 text-white text-opacity-90"
+                : " text-white text-opacity-50")
             }
             onClick={() => {
               setCategories([]);

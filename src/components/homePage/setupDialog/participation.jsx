@@ -5,13 +5,13 @@ import {
   faFileArrowUp,
   faSpinner,
   faCircleCheck,
-  faBoxOpen
+  faBoxOpen,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Participation = ({ isClosed, setIsClosed, addresses, setAddresses }) => {
   const [currentIcon, changeCurrentIcon] = useState({
     icon: addresses ? faCircleCheck : faFileArrowUp,
-    spin: false
+    spin: false,
   });
 
   return (
@@ -19,12 +19,14 @@ const Participation = ({ isClosed, setIsClosed, addresses, setAddresses }) => {
       <h1 className="text-white text-3xl font-medium mt-6 mb-4">
         Participation
       </h1>
-      <div className="flex flex-col relative w-[90%] m-auto font-medium grow">
+      <div className="flex flex-col relative w-90p m-auto font-medium flex-grow">
         <div className="flex flex-row justify-between mb-4">
           <button
             className={
-              "py-4 w-[48%] border border-white/40 rounded-2xl font-medium" +
-              (isClosed ? " bg-white/20 text-white/90" : " text-white/50")
+              "py-4 w-48p border border-white border-opacity-40 rounded-2xl font-medium" +
+              (isClosed
+                ? " bg-white bg-opacity-20 text-white text-opacity-90"
+                : " text-white text-opacity-50")
             }
             onClick={() => setIsClosed(true)}
           >
@@ -32,8 +34,10 @@ const Participation = ({ isClosed, setIsClosed, addresses, setAddresses }) => {
           </button>
           <button
             className={
-              "py-4 w-[47%] border border-white/40 rounded-2xl font-medium" +
-              (!isClosed ? " bg-white/20 text-white/90" : " text-white/50")
+              "py-4 w-47p border border-white border-opacity-40 rounded-2xl font-medium" +
+              (!isClosed
+                ? " bg-white bg-opacity-20 text-white text-opacity-90"
+                : " text-white text-opacity-50")
             }
             onClick={() => setIsClosed(false)}
           >
@@ -41,10 +45,10 @@ const Participation = ({ isClosed, setIsClosed, addresses, setAddresses }) => {
           </button>
         </div>
         {isClosed ? (
-          <div className="flex flex-col items-center justify-center h-48 px-4 bg-white/10 rounded-2xl text-white">
+          <div className="flex flex-col items-center justify-center h-48 px-4 bg-white bg-opacity-10 rounded-2xl text-white">
             <label
               htmlFor="upload"
-              className="flex justify-between items-center w-[55%] py-3 px-[2.3rem] bg-white/30 hover:bg-white/25 rounded-xl text-lg"
+              className="flex justify-between items-center w-55p py-3 px-2.3r bg-white bg-opacity-30 hover:bg-white hover:bg-opacity-25 rounded-xl text-lg"
             >
               <span>Upload</span>
               <FontAwesomeIcon
@@ -65,8 +69,9 @@ const Participation = ({ isClosed, setIsClosed, addresses, setAddresses }) => {
                   let [accountIds] = Object.values(
                     JSON.parse(event.target.result)
                   );
-                  let accountAddresses = accountIds.map(accountId =>
-                    AccountId.fromString(accountId).toSolidityAddress()
+                  let accountAddresses = accountIds.map(
+                    accountId =>
+                      `0x${AccountId.fromString(accountId).toSolidityAddress()}`
                   );
                   setAddresses(accountAddresses);
                   changeCurrentIcon({ icon: faCircleCheck, spin: false });
@@ -80,7 +85,7 @@ const Participation = ({ isClosed, setIsClosed, addresses, setAddresses }) => {
                 changeCurrentIcon({ icon: faFileArrowUp, spin: false });
               }}
             />
-            <p className="text-[0.55rem] font-normal text-center px-10 mt-4">
+            <p className="text-0.55r font-normal text-center px-10 mt-4">
               Upload a JSON document with a single array entry containing the
               account IDs of eligible participants
             </p>
@@ -88,7 +93,7 @@ const Participation = ({ isClosed, setIsClosed, addresses, setAddresses }) => {
         ) : (
           <FontAwesomeIcon
             icon={faBoxOpen}
-            className="text-white/20 mx-auto mt-8 text-9xl"
+            className="text-white text-opacity-20 mx-auto mt-8 text-9xl"
           />
         )}
       </div>

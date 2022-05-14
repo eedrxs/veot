@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 const AddOption = ({ categoryId, onAddOption }) => {
   const input = useRef();
@@ -29,7 +29,7 @@ const AddOption = ({ categoryId, onAddOption }) => {
           input.current.focus();
         }}
       >
-        <FontAwesomeIcon icon={solid("plus-circle")} />
+        <FontAwesomeIcon icon={faPlusCircle} />
       </button>
     </div>
   );

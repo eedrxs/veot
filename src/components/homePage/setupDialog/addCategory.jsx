@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 const AddCategory = ({ onAddCategory }) => {
   const input = useRef();
@@ -28,7 +28,7 @@ const AddCategory = ({ onAddCategory }) => {
           input.current.value = "";
         }}
       >
-        <FontAwesomeIcon icon={solid("plus-circle")} />
+        <FontAwesomeIcon icon={faPlusCircle} />
       </button>
     </div>
   );

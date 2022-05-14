@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { ConnectPage, HomePage, PollPage } from "./components/index";
-// import Web3 from "web3";
 
 const App = () => {
   const [signer, setSigner] = useState();

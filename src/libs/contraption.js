@@ -4,7 +4,7 @@ import {
   PrivateKey,
   ContractCallQuery,
   ContractExecuteTransaction,
-  Hbar
+  Hbar,
 } from "@hashgraph/sdk";
 import Web3 from "web3";
 
@@ -26,15 +26,18 @@ export function createClient(
 export class Contract {
   constructor(contractId, contractAbi) {
     this.contractId = contractId;
+    this.contractAbi = contractAbi;
 
     contractAbi.forEach(func => {
       if (func.type === "function") {
         if (func.stateMutability === "nonpayable") {
-          this[func.name] = (parameters = []) => {
-            const encodedParametersHex = Buffer.from(
-              web3.eth.abi.encodeFunctionCall(func, parameters).slice(2),
-              "hex"
-            );
+          this[func.name] = {};
+          this[func.name].abi = func;
+          this[func.name].call = (parameters = []) => {
+            const encodedParameters = web3.eth.abi
+              .encodeFunctionCall(this[func.name].abi, parameters)
+              .slice(2);
+            const encodedParametersHex = Buffer.from(encodedParameters, "hex");
 
             return async _ => {
               const contractExecuteTx = await new ContractExecuteTransaction()
@@ -54,17 +57,19 @@ export class Contract {
         }
 
         if (func.stateMutability === "view") {
-          this[func.name] = (parameters = []) => {
-            const encodedParametersHex = Buffer.from(
-              web3.eth.abi.encodeFunctionCall(func, parameters).slice(2),
-              "hex"
-            );
+          this[func.name] = {};
+          this[func.name].abi = func;
+          this[func.name].call = (parameters = []) => {
+            const encodedParameters = web3.eth.abi
+              .encodeFunctionCall(this[func.name].abi, parameters)
+              .slice(2);
+            const encodedParametersHex = Buffer.from(encodedParameters, "hex");
 
             return async _ => {
               const contractQueryTx = await new ContractCallQuery()
                 .setContractId(this.contractId)
                 .setFunctionParameters(encodedParametersHex)
-                .setMaxQueryPayment(new Hbar(_.maxQueryPay))
+                .setQueryPayment(new Hbar(_.queryPay))
                 .setGas(_.gas)
                 .executeWithSigner(_.signer);
               const functionParameters = func.outputs;

@@ -4,7 +4,7 @@ const Banner = () => {
   return (
     <div
       id="banner"
-      className="row-span-1 relative bg-[url(./images/banner.jpg)] bg-cover bg-[center_bottom_-13rem] md:bg-[center_bottom_-30rem]"
+      className="row-span-1 relative bg-banner bg-cover bg-homebannerpos md:bg-homebannerpos-md"
     >
       <div className="absolute bottom-8 right-8 text-right text-white">
         <p className="text-4xl md:text-5xl font-bold">2434</p>
