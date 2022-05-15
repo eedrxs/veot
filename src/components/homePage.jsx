@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Contract } from "../libs/contraption";
+import { Contract, ContractClient } from "../libs/contraption";
 import { POLLFACTORY_ID, POLLFACTORY_ABI } from "../contracts/abi/abi";
 import { Banner, Polls, ViewPoll, SetupDialog } from "./homePage/index";
 
 const HomePage = ({ signer }) => {
   const pollFactory = new Contract(POLLFACTORY_ID, POLLFACTORY_ABI);
+  const pollFactoryClient = new ContractClient(POLLFACTORY_ID, POLLFACTORY_ABI);
   const [setupDialog, toggleSetupDialog] = useState(false);
   const [pollCount, setPollCount] = useState(null);
   const [polls, setPolls] = useState();
 
-  // useEffect(() => {
-  //   if (pollCount) return;
-  //   let pollCount_ = pollFactory.getPollCount.call()({
-  //     signer: signer,
-  //     gas: 1000000,
-  //     queryPay: 0.75,
-  //   });
-  //   setPollCount(pollCount_);
-  // });
+  useEffect(() => {
+    (async () => {
+      if (pollCount != null) return;
+      let { 0: pollCount_ } = await pollFactoryClient.getPollCount.call()({
+        gas: 1000000,
+      });
+      setPollCount(pollCount_);
+    })();
+  });
 
   return (
     <React.Fragment>

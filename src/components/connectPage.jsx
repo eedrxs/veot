@@ -26,7 +26,7 @@ const loadLocalData = () => {
   } else return false;
 };
 
-const ConnectPage = ({ /*setAccount,*/ setSigner }) => {
+const ConnectPage = ({ setSigner }) => {
   async function connectToHashPack() {
     //create the hashconnect instance
     let hashconnect = new HashConnect();
