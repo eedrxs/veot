@@ -1,7 +1,7 @@
 import React from "react";
 import { TopBar, PollEntry } from "./index";
 
-const Polls = ({ toggleSetupDialog, polls }) => {
+const Polls = ({ toggleSetupDialog, polls, setSelectedPoll }) => {
   return (
     <div
       id="left-side"
@@ -26,6 +26,8 @@ const Polls = ({ toggleSetupDialog, polls }) => {
             votes={votes}
             isOpen={isOpen}
             pollId={pollId}
+            poll={poll}
+            setSelectedPoll={setSelectedPoll}
             key={pollId}
           />
         );

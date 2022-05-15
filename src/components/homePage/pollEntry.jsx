@@ -8,9 +8,14 @@ const PollEntry = ({
   votes,
   isOpen,
   pollId,
+  poll,
+  setSelectedPoll,
 }) => {
   return (
-    <div className="w-full py-2 bg-llblue">
+    <div
+      className="w-full py-2 bg-llblue"
+      onClick={() => setSelectedPoll(poll)}
+    >
       <div className="grid grid-cols-pollentry relative items-center md:gap-x-14 h-20 w-11/12 mx-auto">
         <div className="text-white text-opacity-50">
           <p className="font-medium text-lg md:text-2xl">{pollId}</p>
@@ -22,20 +27,20 @@ const PollEntry = ({
             <span
               className={
                 "font-normal inline-block rounded-full ml-4 text-xs py-1 px-2 relative bottom-1" +
-                (!status
+                (status === "0"
                   ? "  bg-gold"
-                  : status === 1
+                  : status === "1"
                   ? "  bg-lgreen"
                   : "  bg-red-500")
               }
             >
               {(statusCode => {
                 switch (statusCode) {
-                  case 0:
+                  case "0":
                     return "Upcoming";
-                  case 1:
+                  case "1":
                     return "Active";
-                  case 2:
+                  case "2":
                     return "Expired";
                   default:
                     break;

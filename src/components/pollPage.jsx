@@ -1,10 +1,28 @@
 import React, { useState, useEffect } from "react";
+import { Contract, ContractClient } from "../libs/contraption";
+import { POLL_ABI } from "../contracts/abi/abi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-const PollPage = () => {
+const PollPage = ({ joinedPoll, setJoinedPoll }) => {
+  const pollFactory = new Contract(joinedPoll, POLL_ABI);
+  const pollFactoryClient = new ContractClient(joinedPoll, POLL_ABI);
+  const [optionsVotes, setOptionsVotes] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      let { 0: optionsVotes } =
+        await pollFactoryClient.getOptionsAndVotes.call()({
+          gas: 1000000,
+          maxQueryPay: 0.75,
+        });
+    })();
+    console.log(optionsVotes);
+    // setOptionsVotes()
+  }, []);
+
   return (
-    <main className="h-screen w-screen">
+    <main className="h-screen w-screen fixed top-0 left-0">
       <div
         id="wrapper"
         className="flex flex-col relative overflow-y-hidden min-h-full w-full lg:w-65p"
@@ -15,6 +33,7 @@ const PollPage = () => {
               <FontAwesomeIcon
                 icon={faArrowLeft}
                 className="text-blue bg-white bg-opacity-50 h-5 w-5 p-2 rounded-full"
+                onClick={() => setJoinedPoll(null)}
               />
             </div>
             <div

@@ -75,10 +75,10 @@ export class Contract {
               const contractQuerySubmit =
                 await contractQueryTx.executeWithSigner(_.signer);
 
-              console.log(encodedParameters);
-              console.log(this[func.name].abi.outputs);
-              console.log(contractQueryTx);
-              if (!contractQuerySubmit) return;
+              // console.log(encodedParameters);
+              // console.log(this[func.name].abi.outputs);
+              // console.log(contractQueryTx);
+              // if (!contractQuerySubmit) return;
               const functionParameters = this[func.name].abi.outputs;
               const resultHex = "0x".concat(
                 Buffer.from(contractQuerySubmit.bytes).toString("hex")
