@@ -53,6 +53,7 @@ contract PollData {
         uint votes;             // Total number of votes at the time of querying
         bool isOpen;            // Bool that shows if poll is an open or closed poll
         bool isEligible;        // Bool that shows if the account querying is eligible to participate
+        uint pollId;            // ID of the poll
     }
 
     enum PollStatus {Upcoming, Ongoing, Ended}

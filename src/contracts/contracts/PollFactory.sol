@@ -42,7 +42,8 @@ contract PollFactory is PollData {
             uint256[] memory startEnd,
             uint256 creationTime,
             uint256 votes,
-            bool isOpen
+            bool isOpen,
+            uint256 pollId_
         ) = _polls[pollId].getPollDetails();
         bool callerIsEligible = _polls[pollId].isEligible(msg.sender);
         PollStatus _pollStatus = pollStatus(startEnd);
@@ -54,7 +55,8 @@ contract PollFactory is PollData {
                 _pollStatus,
                 votes,
                 isOpen,
-                callerIsEligible
+                callerIsEligible,
+                pollId_
             );
     }
 

@@ -13,25 +13,26 @@ contract Poll is PollData {
     using Counters for Counters.Counter;
     Counters.Counter private _voteId;
 
-    mapping (uint => address) private _votes;
-    mapping (address => uint8) private _voteBalance;
-    uint[][] private _optionsVotes;
-    event voteCasted(uint indexed totalVotes, uint[][] indexed optionsVotes);
+    mapping(uint256 => address) private _votes;
+    mapping(address => uint8) private _voteBalance;
+    uint256[][] private _optionsVotes;
+    event voteCasted(
+        uint256 indexed totalVotes,
+        uint256[][] indexed optionsVotes
+    );
 
     uint256 private _pollId;
     address public owner;
-    uint private _creationTime;
+    uint256 private _creationTime;
     string[] private _titleDesc;
-    uint[] private _startEnd;
+    uint256[] private _startEnd;
     Category[] private _categories;
     Participants private _participants;
 
-
-
     constructor(
         uint256 pollId_,
-        string[] memory titleDesc_,     //[title, description]
-        uint[] memory startEnd_,        //[startTime, endTime]
+        string[] memory titleDesc_, //[title, description]
+        uint256[] memory startEnd_, //[startTime, endTime]
         Category_[] memory categories_,
         address[] memory participants_
     ) {
@@ -55,7 +56,7 @@ contract Poll is PollData {
         _;
     }
 
-    function vote(uint8[] calldata _options) external isAcceptable() {
+    function vote(uint8[] calldata _options) external isAcceptable {
         for (uint8 i; i < _options.length; i++) {
             _categories[i].options[_options[i]].votes += 1;
             _optionsVotes[i][_options[i]] += 1;
@@ -66,22 +67,50 @@ contract Poll is PollData {
         emit voteCasted(_voteId.current(), _optionsVotes);
     }
 
-    function getVoteCount() external view returns(uint) {
+    function getVoteCount() external view returns (uint256) {
         return _voteId.current();
     }
 
-    function getPollDetails() external view returns(string[] memory, uint[] memory, uint, uint, bool) {
-        return(_titleDesc, _startEnd, _creationTime, _voteId.current(), _participants.list.length == 0);
+    function getPollDetails()
+        external
+        view
+        returns (
+            string[] memory,
+            uint256[] memory,
+            uint256,
+            uint256,
+            bool,
+            uint256
+        )
+    {
+        return (
+            _titleDesc,
+            _startEnd,
+            _creationTime,
+            _voteId.current(),
+            _participants.list.length == 0,
+            _pollId
+        );
     }
 
-    function getOptionsAndVotes() external view returns(uint , Category[] memory) {
+    function getOptionsAndVotes()
+        external
+        view
+        returns (uint256, Category[] memory)
+    {
         return (_voteId.current(), _categories);
     }
 
-    function getCurrentVotes() external view returns(uint , uint32[][] memory) {
+    function getCurrentVotes()
+        external
+        view
+        returns (uint256, uint32[][] memory)
+    {
         uint32[][] memory categories = new uint32[][](_categories.length);
         for (uint8 i; i < _categories.length; i++) {
-            uint32[] memory options = new uint32[](_categories[i].options.length);
+            uint32[] memory options = new uint32[](
+                _categories[i].options.length
+            );
             for (uint32 j; j < _categories[i].options.length; j++) {
                 options[j] = _categories[i].options[j].votes;
             }
@@ -90,7 +119,7 @@ contract Poll is PollData {
         return (_voteId.current(), categories);
     }
 
-    function isEligible(address account) public view returns(bool) {
+    function isEligible(address account) public view returns (bool) {
         if (_participants.list.length == 0) return true;
         return _participants.eligibility[account];
     }

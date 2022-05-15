@@ -12,15 +12,14 @@ const web3 = new Web3();
 
 export function createClient(
   accountId,
-  privateKey,
-  _ = { maxTxFee: 0.75, maxQryPay: 0.05 }
+  privateKey
+  // _ = { maxTxFee: 0.75, maxQryPay: 0.05 }
 ) {
   const operatorId = AccountId.fromString(accountId);
   const operatorKey = PrivateKey.fromString(privateKey);
-  return Client.forTestnet()
-    .setOperator(operatorId, operatorKey)
-    .setDefaultMaxTransactionFee(new Hbar(_.maxTxFee))
-    .setMaxQueryPayment(new Hbar(_.maxQryPay));
+  return Client.forTestnet().setOperator(operatorId, operatorKey);
+  // .setDefaultMaxTransactionFee(new Hbar(_.maxTxFee))
+  // .setMaxQueryPayment(new Hbar(_.maxQryPay));
 }
 
 export class Contract {
@@ -148,8 +147,8 @@ export class ContractClient {
               const contractQueryTx = new ContractCallQuery()
                 .setContractId(this.contractId)
                 .setFunctionParameters(encodedParametersHex)
+                .setQueryPayment(new Hbar(_.maxQueryPay))
                 // .setMaxQueryPayment(new Hbar(_.maxQueryPay))
-                // .setQueryPayment(new Hbar(_.maxQueryPay))
                 .setGas(_.gas);
               const contractQuerySubmit = await contractQueryTx.execute(
                 this.client
