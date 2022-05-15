@@ -35,7 +35,10 @@ const ViewPoll = ({
       gas: 1000000,
       maxQueryPay: 0.75,
     });
-    setJoinedPoll(AccountId.fromSolidityAddress(address).toString());
+    setJoinedPoll({
+      address: AccountId.fromSolidityAddress(address).toString(),
+      details: selectedPoll,
+    });
   }
 
   return (

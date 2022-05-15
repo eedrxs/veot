@@ -4,14 +4,23 @@ import { POLL_ABI } from "../contracts/abi/abi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-const PollPage = ({ joinedPoll, setJoinedPoll }) => {
-  const pollFactory = new Contract(joinedPoll, POLL_ABI);
-  const pollFactoryClient = new ContractClient(joinedPoll, POLL_ABI);
+const PollPage = ({ details, address, setJoinedPoll }) => {
+  const pollFactory = new Contract(address, POLL_ABI);
+  const pollFactoryClient = new ContractClient(address, POLL_ABI);
   const [optionsVotes, setOptionsVotes] = useState([]);
+
+  let titleDesc = details[0];
+  let startEnd = details[1];
+  let creationTime = details[2];
+  let status = details[3];
+  let votes = details[4];
+  let isOpen = details[5];
+  let isEligible = details[6];
+  let pollId = details[7];
 
   useEffect(() => {
     (async () => {
-      let { 0: optionsVotes } =
+      let { 0: votes, 1: optionsVotes } =
         await pollFactoryClient.getOptionsAndVotes.call()({
           gas: 1000000,
           maxQueryPay: 0.75,
@@ -33,17 +42,17 @@ const PollPage = ({ joinedPoll, setJoinedPoll }) => {
               <FontAwesomeIcon
                 icon={faArrowLeft}
                 className="text-blue bg-white bg-opacity-50 h-5 w-5 p-2 rounded-full"
-                onClick={() => setJoinedPoll(null)}
+                onClick={() => setJoinedPoll([])}
               />
             </div>
             <div
               id="poll-header"
               className="grid grid-cols-pollpage items-end text-blue"
             >
-              <p className="font-medium text-2xl lg:text-3xl">
-                SUG Elections 2022
+              <p className="font-medium text-2xl lg:text-3xl">{titleDesc[0]}</p>
+              <p className="text-right font-medium text-lg lg:text-xl">
+                #{pollId}
               </p>
-              <p className="text-right font-medium text-lg lg:text-xl">#5478</p>
             </div>
             <div className="flex flex-row justify-between w-full h-1 mt-2">
               <div className="bg-white w-13p rounded-full"></div>
@@ -100,7 +109,7 @@ const PollPage = ({ joinedPoll, setJoinedPoll }) => {
           className="flex justify-between items-center fixed bottom-0 px-3 lg:px-5 w-full lg:w-65p h-12 lg:h-14 bg-lblue text-white"
         >
           <div>
-            2,239 <i>total votes</i>
+            {votes} <i>total votes</i>
           </div>
           <div className="bg-green rounded-xl py-2 px-28 h-75p font-medium">
             Vote
