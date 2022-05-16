@@ -1,9 +1,8 @@
 import React from "react";
 import { HashConnect } from "hashconnect";
-// import { ApiSession } from "@buidlerlabs/hedera-strato-js";
-// import { HashPackWallet } from "../../libs/hashconnect";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTwitter, faGithub } from "@fortawesome/free-brands-svg-icons";
 
-// let hashconnect;
 let saveData = {
   topic: "",
   pairingString: "",
@@ -86,44 +85,6 @@ const ConnectPage = ({ setSigner }) => {
       setSigner(signer);
     }
   }
-  // async function connectToHashPack() {
-  //   let wallet = await HashPackWallet.getConnection(false);
-
-  //   if (!wallet) {
-  //     // No wallet-session could be recovered. Start a fresh one
-  //     wallet = await HashPackWallet.newConnection({
-  //       appMetadata: appMetadata,
-  //       debug: false,
-  //       networkName: "testnet"
-  //     });
-  //   }
-  //   // window["hedera"] = wallet;
-  //   // const { session } = await ApiSession.default({
-  //   //   wallet: { type: "Browser" }
-  //   // });
-  //   // const { session } = await ApiSession.default({
-  //   //   wallet: {
-  //   //     type: "Sdk",
-  //   //     sdk: {
-  //   //       operatorId: sessionTemp.wallet.account.id,
-  //   //       operatorKey:
-  //   //         "302e020100300506032b657004220420f063a8dafe7385c574dfd050bdd4f571b649ad51e157cba3bdc4591e093dbbd3"
-  //   //     }
-  //   //   }
-  //   // });
-
-  //   // const hashconnect = new HashConnect();
-  //   // let initData = await hashconnect.init(appMetadata);
-  //   // let privateKey = initData.privKey;
-  //   // console.log(privateKey);
-
-  //   // setAccount({
-  //   //   id: sessionTemp.wallet.account.id,
-  //   //   privateKey:
-  //   //     "302e020100300506032b657004220420f063a8dafe7385c574dfd050bdd4f571b649ad51e157cba3bdc4591e093dbbd3"
-  //   // });
-  //   // setSession(session);
-  // }
 
   return (
     <div className="grid grid-cols-connectpage-sm lg:grid-cols-connectpage h-screen w-screen">
@@ -143,8 +104,22 @@ const ConnectPage = ({ setSigner }) => {
           Connect to HashPack Wallet
         </button>
         <div className="flex justify-center">
-          <div className="border-2 h-4 w-4 mr-6"></div>
-          <div className="border-2 h-4 w-4"></div>
+          <a
+            href="https://twitter.com/eedrxs"
+            target="_blank"
+            rel="noreferrer"
+            className="text-white text-lg text-opacity-50 hover:text-opacity-40 mr-6"
+          >
+            <FontAwesomeIcon icon={faTwitter} />
+          </a>
+          <a
+            href="https://github.com/eedrxs/veot"
+            target="_blank"
+            rel="noreferrer"
+            className="text-white text-lg text-opacity-50 hover:text-opacity-40"
+          >
+            <FontAwesomeIcon icon={faGithub} />
+          </a>
         </div>
       </div>
     </div>
