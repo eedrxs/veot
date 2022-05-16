@@ -1,5 +1,5 @@
 import React from "react";
-import { Category } from "./xcategory";
+import { Category } from "./Category";
 import AddCategory from "./addCategory";
 
 const TypeOptions = ({
