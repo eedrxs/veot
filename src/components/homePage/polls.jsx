@@ -1,13 +1,19 @@
 import React from "react";
 import { TopBar, PollEntry } from "./index";
 
-const Polls = ({ toggleSetupDialog, polls, setSelectedPoll, loadMore }) => {
+const Polls = ({
+  toggleSetupDialog,
+  polls,
+  setSelectedPoll,
+  getLatest,
+  loadMore,
+}) => {
   return (
     <div
       id="left-side"
       className="relative pt-12 md:col-span-5 col-span-4 bg-green overflow-y-auto"
     >
-      <TopBar toggleSetupDialog={toggleSetupDialog} />
+      <TopBar toggleSetupDialog={toggleSetupDialog} getLatest={getLatest} />
       {/* <div className="relative overflow-y-auto w-full"> */}
       {polls.map(poll => {
         let titleDesc = poll[0];

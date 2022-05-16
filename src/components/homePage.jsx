@@ -47,6 +47,25 @@ const HomePage = ({ signer, setJoinedPoll }) => {
     setPolls(_polls);
   }
 
+  async function getLatest() {
+    let { 0: pollCount_ } = await pollFactoryClient.getPollCount.call()({
+      gas: 1000000,
+      maxQueryPay: 0.75,
+    });
+    if (+pollCount_ > +pollCount) {
+      setPollCount(pollCount_);
+      let { 0: polls_ } = await pollFactoryClient.fetchPolls.call([
+        pollCount_,
+        pollCount_ - pollCount,
+      ])({
+        gas: 1000000,
+        maxQueryPay: 1.25,
+      });
+      let _polls = [...polls_, ...polls];
+      setPolls(_polls);
+    }
+  }
+
   return (
     <React.Fragment>
       {setupDialog ? (
@@ -54,6 +73,7 @@ const HomePage = ({ signer, setJoinedPoll }) => {
           toggleSetupDialog={toggleSetupDialog}
           signer={signer}
           pollFactory={pollFactory}
+          getLatest={getLatest}
         />
       ) : null}
       <div className="grid md:grid-rows-3 h-screen w-screen font-sans">
@@ -63,6 +83,7 @@ const HomePage = ({ signer, setJoinedPoll }) => {
             toggleSetupDialog={toggleSetupDialog}
             polls={polls}
             setSelectedPoll={setSelectedPoll}
+            getLatest={getLatest}
             loadMore={loadMore}
           />
           <ViewPoll

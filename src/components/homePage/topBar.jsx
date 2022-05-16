@@ -1,11 +1,13 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 
-const TopBar = ({ toggleSetupDialog }) => {
+const TopBar = ({ toggleSetupDialog, getLatest }) => {
   return (
     <div id="top-bar" className="absolute top-0 left-0 bg-ablue h-12 w-full">
       <div className="flex flex-row justify-between items-center w-11/12 h-full mx-auto">
-        <div className="h-8 w-8 text-center pt-1 bg-lblue rounded-full text-white">
-          12
+        <div className="h-8 w-8 text-center pt-1 bg-lblue hover:bg-llblue rounded-full text-white">
+          <FontAwesomeIcon icon={faRotateLeft} onClick={() => getLatest()} />
         </div>
         <button
           type="button"

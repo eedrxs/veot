@@ -9,7 +9,7 @@ import {
   FinishSetup,
 } from "./setupDialog/index";
 
-const SetupDialog = ({ toggleSetupDialog, signer, pollFactory }) => {
+const SetupDialog = ({ toggleSetupDialog, signer, pollFactory, getLatest }) => {
   const [page, setPage] = useState(1);
   const [isBasic, setIsBasic] = useState(true);
   const [isTimed, setIsTimed] = useState(true);
@@ -70,6 +70,7 @@ const SetupDialog = ({ toggleSetupDialog, signer, pollFactory }) => {
       categories_,
       addresses_,
     ])({ signer: signer, gas: 1000000, maxTxFee: 0.75 });
+    getLatest();
     toggleSetupDialog(false);
   };
 

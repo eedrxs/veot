@@ -110,6 +110,22 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
     return votes.some(categoryVote => categoryVote === undefined);
   }
 
+  async function getCurrentVotes() {
+    let { 0: totalVotes, 1: currentVotes } =
+      await pollContractClient.getCurrentVotes.call()({
+        gas: 1000000,
+        maxQueryPay: 0.75,
+      });
+    let categories_ = JSON.parse(JSON.stringify(categories));
+    for (let i = 0; i < currentVotes.length; i++) {
+      for (let j = 0; j < currentVotes[i].length; j++) {
+        categories_[i][2][j][1] = currentVotes[i][j];
+      }
+    }
+    setCategories(categories_);
+    setTotalVotes(totalVotes);
+  }
+
   return (
     <main className="h-screen w-screen fixed top-0 left-0">
       <div
@@ -141,7 +157,12 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
               {categories.map(category => (
                 <div
                   key={category[0]}
-                  className="bg-white w-13p flex-grow hover:h-4 rounded-full"
+                  className={
+                    "bg-white w-13p flex-grow rounded-full" +
+                    (currentPage === +category[0]
+                      ? " bg-opacity-100"
+                      : " bg-opacity-50")
+                  }
                   onClick={() => {
                     setCurrentPage(+category[0]);
                   }}
@@ -230,12 +251,7 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
                 alert("It seems you've already voted.");
               }
 
-              let { 0: totalVotes, 1: currentVotes } =
-                await pollContractClient.getCurrentVotes.call()({
-                  gas: 1000000,
-                  maxQueryPay: 0.75,
-                });
-              setTotalVotes(totalVotes);
+              getCurrentVotes();
             }}
           >
             Vote
@@ -282,7 +298,7 @@ export const BarChart = ({ category, options, colorArray }) => {
   };
 
   return (
-    <div className="w-95p mx-auto">
+    <div className="w-95p mx-auto rounded-xl bg-white bg-opacity-5 px-2 py-4">
       <Bar data={chartData} options={options_} />
     </div>
   );
