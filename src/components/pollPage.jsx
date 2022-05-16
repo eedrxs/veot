@@ -3,8 +3,25 @@ import { Contract, ContractClient } from "../libs/contraption";
 import { POLL_ABI } from "../contracts/abi/abi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { Chart, BarElement } from "chart.js";
-Chart.register(BarElement);
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const PollPage = ({ details, address, setJoinedPoll, signer }) => {
   const pollContract = new Contract(address, POLL_ABI);
@@ -14,7 +31,7 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [votes, setVotes] = useState([]);
   const [chartData, setChartData] = useState({});
-  var colorArray = [
+  const colorArray = [
     "#FF6633",
     "#FFB399",
     "#FF33FF",
@@ -175,7 +192,8 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
                         setVotes(votes_);
                       }}
                     >
-                      {option[2]} {/* Option text */}
+                      <small>{index + 1}.</small> {option[2]}{" "}
+                      {/* Option text */}
                       <span className="block absolute top-1 right-4 text-white text-opacity-70 text-sm lg:text-lg">
                         {option[1]} {/* Votes */}
                       </span>
@@ -224,10 +242,49 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
           </button>
         </div>
       </div>
-      <div className="fixed top-0 right-0 bg-blue h-full w-35p hidden lg:block text-white text-3xl">
-        Hello World!
+      <div className="fixed lg:flex lg:flex-col justify-center top-0 right-0 bg-blue h-full w-35p hidden text-white text-3xl">
+        {categories.length !== 0 ? (
+          <BarChart
+            category={categories[currentPage][1]}
+            options={categories[currentPage][2]}
+            colorArray={colorArray}
+          />
+        ) : null}
       </div>
     </main>
+  );
+};
+
+export const BarChart = ({ category, options, colorArray }) => {
+  let chartData = {
+    labels: options.map(option => +option[0] + 1),
+    datasets: [
+      {
+        label: "Votes", //options[1],
+        data: options.map(option => option[1]),
+        backgroundColor: options.map((option, index) => colorArray[index + 6]),
+      },
+    ],
+  };
+
+  let options_ = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: category,
+      },
+    },
+  };
+
+  return (
+    <div className="w-95p mx-auto">
+      <Bar data={chartData} options={options_} />
+    </div>
   );
 };
 

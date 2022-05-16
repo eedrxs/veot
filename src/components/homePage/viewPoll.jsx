@@ -55,18 +55,32 @@ const ViewPoll = ({
           />
           <h1 className="font-medium text-3xl mb-1">{titleDesc[0]}</h1>
           <h3 className="font-medium text-lg mb-8">{titleDesc[1]}</h3>
-          <p>Poll ID: {pollId}</p>
-          <p>Participation: {isOpen ? "Open" : "Closed"}</p>
+          <p>
+            Poll ID: <b>{pollId}</b>
+          </p>
+          <p>
+            Participation: <b>{isOpen ? "Open" : "Closed"}</b>
+          </p>
           {!startEnd.length ? (
-            <p>Duration: Timeless</p>
+            <p>
+              Duration: <b>Timeless</b>
+            </p>
           ) : (
             <React.Fragment>
-              <p>Starts: {new Date(startEnd[0] * 1000).toDateString()}</p>
-              <p>Ends: {new Date(startEnd[1] * 1000).toDateString()}</p>
+              <p>
+                Starts: <b>{new Date(startEnd[0] * 1000).toDateString()}</b>
+              </p>
+              <p>
+                Ends: <b>{new Date(startEnd[1] * 1000).toDateString()}</b>
+              </p>
             </React.Fragment>
           )}
-          <p>Votes: {votes}</p>
-          <p>Created: {new Date(creationTime * 1000).toDateString()}</p>
+          <p>
+            Votes: <b>{votes}</b>
+          </p>
+          <p>
+            Created: <b>{new Date(creationTime * 1000).toDateString()}</b>
+          </p>
           <button
             type="button"
             disabled={!isEligible}
