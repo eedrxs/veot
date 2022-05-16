@@ -64,12 +64,13 @@ const SetupDialog = ({ toggleSetupDialog, signer, pollFactory }) => {
       });
       return Object.values(category);
     });
-    pollFactory.createPoll.call([
+    await pollFactory.createPoll.call([
       titleDesc_,
       startEnd_,
       categories_,
       addresses_,
     ])({ signer: signer, gas: 1000000, maxTxFee: 0.75 });
+    toggleSetupDialog(false);
   };
 
   return (

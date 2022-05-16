@@ -1,13 +1,14 @@
 import React from "react";
 import { TopBar, PollEntry } from "./index";
 
-const Polls = ({ toggleSetupDialog, polls, setSelectedPoll }) => {
+const Polls = ({ toggleSetupDialog, polls, setSelectedPoll, loadMore }) => {
   return (
     <div
       id="left-side"
-      className="relative pt-12 md:col-span-5 col-span-4 bg-green"
+      className="relative pt-12 md:col-span-5 col-span-4 bg-green overflow-y-auto"
     >
       <TopBar toggleSetupDialog={toggleSetupDialog} />
+      {/* <div className="relative overflow-y-auto w-full"> */}
       {polls.map(poll => {
         let titleDesc = poll[0];
         let startEnd = poll[1];
@@ -32,6 +33,13 @@ const Polls = ({ toggleSetupDialog, polls, setSelectedPoll }) => {
           />
         );
       })}
+      {/* </div> */}
+      <div
+        className="w-full py-3 bg-green hover:bg-lgreen text-white font-medium text-center italic border"
+        onClick={() => loadMore()}
+      >
+        Load more polls...
+      </div>
     </div>
   );
 };

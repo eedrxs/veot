@@ -13,7 +13,7 @@ const PollEntry = ({
 }) => {
   return (
     <div
-      className="w-full py-2 bg-llblue"
+      className={"w-full py-2" + (pollId % 2 ? " bg-llblue" : "  bg-lblue")}
       onClick={() => setSelectedPoll(poll)}
     >
       <div className="grid grid-cols-pollentry relative items-center md:gap-x-14 h-20 w-11/12 mx-auto">
@@ -39,9 +39,9 @@ const PollEntry = ({
                   case "0":
                     return "Upcoming";
                   case "1":
-                    return "Active";
+                    return "Ongoing";
                   case "2":
-                    return "Expired";
+                    return "Ended";
                   default:
                     break;
                 }

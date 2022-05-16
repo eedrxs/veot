@@ -10,6 +10,7 @@ const HomePage = ({ signer, setJoinedPoll }) => {
   const [pollCount, setPollCount] = useState(null);
   const [polls, setPolls] = useState([]);
   const [selectedPoll, setSelectedPoll] = useState([]);
+  const [earliestPoll, setEarliestPoll] = useState();
 
   useEffect(() => {
     (async () => {
@@ -20,15 +21,31 @@ const HomePage = ({ signer, setJoinedPoll }) => {
       });
       let { 0: polls_ } = await pollFactoryClient.fetchPolls.call([
         pollCount_,
-        4,
+        5,
       ])({
         gas: 1000000,
         maxQueryPay: 1.25,
       });
+      setEarliestPoll(+polls_[polls_.length - 1][7]);
       setPolls(polls_);
       setPollCount(pollCount_);
     })();
   }, []);
+
+  async function loadMore() {
+    if (earliestPoll === 1) return;
+    let quantity = earliestPoll > 5 ? 5 : Math.abs(0 - earliestPoll) - 1;
+    let { 0: polls_ } = await pollFactoryClient.fetchPolls.call([
+      earliestPoll - 1,
+      quantity,
+    ])({
+      gas: 1000000,
+      maxQueryPay: 1.25,
+    });
+    let _polls = [...polls].concat(polls_);
+    setEarliestPoll(+polls_[polls_.length - 1][7]);
+    setPolls(_polls);
+  }
 
   return (
     <React.Fragment>
@@ -46,6 +63,7 @@ const HomePage = ({ signer, setJoinedPoll }) => {
             toggleSetupDialog={toggleSetupDialog}
             polls={polls}
             setSelectedPoll={setSelectedPoll}
+            loadMore={loadMore}
           />
           <ViewPoll
             pollFactoryClient={pollFactoryClient}
