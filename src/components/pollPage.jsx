@@ -134,7 +134,7 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
       >
         <div
           style={{ backdropFilter: "blur(14)" }}
-          className="flex flex-col bg-llblue bg-opacity-50 backdrop-blur-lg h-full flex-grow pt-14"
+          className="flex flex-col bg-llblue bg-opacity-50 backdrop-filter backdrop-blur-6px h-full flex-grow pt-14"
         >
           <div className="flex flex-col min-h-full w-11/12 flex-grow mx-auto">
             <div className="mb-4">
