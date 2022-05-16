@@ -2,6 +2,7 @@ import React from "react";
 import { HashConnect } from "hashconnect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter, faGithub } from "@fortawesome/free-brands-svg-icons";
+import logo from "../img/logo.svg";
 
 let saveData = {
   topic: "",
@@ -90,7 +91,9 @@ const ConnectPage = ({ setSigner }) => {
     <div className="grid grid-cols-connectpage-sm lg:grid-cols-connectpage h-screen w-screen">
       <div className="bg-banner bg-cover"></div>
       <div className="flex flex-col justify-center items-center bg-blue text-white text-center">
-        <div className="border-2 border-white h-14 w-14 mb-4"></div>
+        <div className="mb-3">
+          {/* <img src={logo} className="h-16 w-16" alt="veot logo" /> */}
+        </div>
         <p className="font-bold text-7xl mb-14">Veot</p>
         <p className="text-sm mb-44">
           A decentralised polling platform <br /> built upon the Hedera

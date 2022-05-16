@@ -1,6 +1,8 @@
 # Veot
 
-**Veot** is a decentralized polling platform built upon the Hedera Hashgraph. It harnesses blockchain technology to bring about a trustless, tamper-immune polling system that is free-for-all and serves as a competent tool for determining social outcomes and giving voice to opinions.
+**Veot** is a decentralized polling platform built upon the Hedera Hashgraph.
+
+It harnesses blockchain technology to bring about a trustless, tamper-immune polling system that is free-for-all and serves as a competent tool for determining social outcomes and giving voice to opinions.
 
 It's utility is open-ended and is equally useful for a number of other things _(e.g carrying out surveys, etc)_
 
