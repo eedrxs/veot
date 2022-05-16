@@ -8,9 +8,9 @@ It's utility is open-ended and is equally useful for a number of other things _(
 
 Creating a poll on the platform is as easy as it comes and there isn't much to elucidate on. If you intend creating a closed poll, the JSON document you'd upload should be in this format:
 
-{
-"accountIds": ["0.0.34142789", "0.0.34142790", "0.0.34142791"]
-}
+    {
+    "accountIds": ["0.0.34142789", "0.0.34142790", "0.0.34142791"]
+    }
 
 ## Joining a poll
 
