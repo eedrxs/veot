@@ -62,6 +62,9 @@ module.exports = {
     fontFamily: {
       sans: ["Open Sans", "sans-serif"],
     },
+    boxShadow: {
+      goldbutton: "0 6px 25px -5px #e4990381",
+    },
   },
   variants: {
     extend: {},

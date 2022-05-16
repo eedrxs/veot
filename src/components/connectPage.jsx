@@ -99,7 +99,7 @@ const ConnectPage = ({ setSigner }) => {
         <button
           type="button"
           onClick={connectToHashPack}
-          className="bg-gold hover:bg-dgold font-medium py-5 px-12 rounded-3xl mb-10"
+          className="bg-gold hover:bg-dgold shadow-goldbutton font-medium py-5 px-12 rounded-3xl mb-10"
         >
           Connect to HashPack Wallet
         </button>

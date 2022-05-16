@@ -105,7 +105,7 @@ const ViewPoll = ({
           ></input>
           <button
             type="button"
-            className="py-4 px-8 w-full bg-gold hover:bg-dgold text-white rounded-2xl"
+            className="py-4 px-8 w-full bg-gold hover:bg-dgold shadow-goldbutton text-white rounded-2xl"
             onClick={() => viewPoll()}
           >
             View Poll
