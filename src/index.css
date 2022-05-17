@@ -6,6 +6,6 @@
   overflow-x: hidden;
 }
 
-@layer base {
+/* @layer base { */
   @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,500;1,400;1,500&display=swap');
-}
+/* } */
