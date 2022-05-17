@@ -1,4 +1,9 @@
 import React from "react";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en.json";
+
+TimeAgo.addDefaultLocale(en);
+const timeAgo = new TimeAgo("en-US");
 
 const PollEntry = ({
   titleDesc,
@@ -19,7 +24,13 @@ const PollEntry = ({
       <div className="grid grid-cols-pollentry relative items-center md:gap-x-14 h-20 w-11/12 mx-auto">
         <div className="text-white text-opacity-50">
           <p className="font-medium text-lg md:text-2xl">{pollId}</p>
-          <p className="text-xs"></p>
+          <p className="text-xs">
+            {timeAgo.format(
+              Date.now() - (new Date() - new Date(creationTime)),
+              "mini-now"
+            )}{" "}
+            ago
+          </p>
         </div>
         <div className="text-white">
           <div className="md:text-lg font-medium">

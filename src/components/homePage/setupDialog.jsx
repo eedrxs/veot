@@ -21,7 +21,7 @@ const SetupDialog = ({ toggleSetupDialog, signer, pollFactory, getLatest }) => {
   const [categories, setCategories] = useState([
     { id: null, textContent: "", options: [] },
   ]);
-  const [duration, setDuration] = useState({ start: new Date(), end: null });
+  const [duration, setDuration] = useState({ start: null, end: null });
   const [addresses, setAddresses] = useState(null);
 
   const handleAddOption = (option, categoryId) => {
@@ -69,7 +69,7 @@ const SetupDialog = ({ toggleSetupDialog, signer, pollFactory, getLatest }) => {
       startEnd_,
       categories_,
       addresses_,
-    ])({ signer: signer, gas: 1000000, maxTxFee: 0.75 });
+    ])({ signer: signer, gas: 1000000, maxTxFee: 1.75 });
     getLatest();
     toggleSetupDialog(false);
   };
