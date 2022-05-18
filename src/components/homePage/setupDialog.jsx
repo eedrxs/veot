@@ -69,7 +69,7 @@ const SetupDialog = ({ toggleSetupDialog, signer, pollFactory, getLatest }) => {
       startEnd_,
       categories_,
       addresses_,
-    ])({ signer: signer, gas: 1000000, maxTxFee: 1.75 });
+    ])({ signer: signer, gas: 1000000, maxTxFee: 3.75 });
     getLatest();
     toggleSetupDialog(false);
   };
