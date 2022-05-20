@@ -102,8 +102,8 @@ export class ContractClient {
     this.contractId = contractId;
     this.contractAbi = contractAbi;
     this.client = createClient(
-      "0.0.34142789",
-      "302e020100300506032b657004220420f063a8dafe7385c574dfd050bdd4f571b649ad51e157cba3bdc4591e093dbbd3"
+      process.env.REACT_APP_ACCOUNT_ID,
+      process.env.REACT_APP_PRIVATE_KEY
     );
 
     contractAbi.forEach(func => {

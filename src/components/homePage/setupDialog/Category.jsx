@@ -13,6 +13,7 @@ const Category = ({
   onAddOption,
   onRemoveOption,
   onRemoveCategory,
+  scroll,
 }) => {
   return (
     <div
@@ -47,11 +48,18 @@ const Category = ({
           <FontAwesomeIcon
             icon={faMinusCircle}
             className="absolute top-2 right-2 text-red-500 hover:text-red-600 text-3xl"
-            onClick={() => onRemoveOption(index, categoryId)}
+            onClick={() => {
+              onRemoveOption(index, categoryId);
+              scroll.current.topScroll -= 68;
+            }}
           />
         </div>
       ))}
-      <AddOption categoryId={categoryId} onAddOption={onAddOption} />
+      <AddOption
+        categoryId={categoryId}
+        onAddOption={onAddOption}
+        scroll={scroll}
+      />
     </div>
   );
 };

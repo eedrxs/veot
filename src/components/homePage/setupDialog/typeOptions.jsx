@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Category from "./Category";
 import AddCategory from "./addCategory";
 
@@ -12,6 +12,7 @@ const TypeOptions = ({
   onAddCategory,
   onRemoveCategory,
 }) => {
+  const scroll = useRef();
   return (
     <React.Fragment>
       <h1 className="text-white text-3xl font-medium mt-6 mb-4">
@@ -48,7 +49,11 @@ const TypeOptions = ({
             Categorised
           </button>
         </div>
-        <div className={"overflow-y-auto h-72 pb-1" + (isBasic ? " mt-4" : "")}>
+        <div
+          ref={scroll}
+          style={{ scrollBehavior: "smooth" }}
+          className={"overflow-y-auto h-72 pb-1" + (isBasic ? " mt-4" : "")}
+        >
           {categories.map((category, index) => (
             <Category
               category={category}
@@ -57,11 +62,14 @@ const TypeOptions = ({
               onAddOption={onAddOption}
               onRemoveOption={onRemoveOption}
               onRemoveCategory={onRemoveCategory}
+              scroll={scroll}
               key={index}
             />
           ))}
 
-          {isBasic ? null : <AddCategory onAddCategory={onAddCategory} />}
+          {isBasic ? null : (
+            <AddCategory onAddCategory={onAddCategory} scroll={scroll} />
+          )}
         </div>
       </div>
     </React.Fragment>

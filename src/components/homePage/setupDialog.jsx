@@ -55,13 +55,18 @@ const SetupDialog = ({ toggleSetupDialog, signer, pollFactory, getLatest }) => {
           parseInt(new Date(date).getTime() / 1000.0)
         )
       : [];
-    const addresses_ = isClosed ? addresses : [];
+    const addresses_ = isClosed ? [...addresses] : [];
+    let size = { width: 0, depth: 0 };
     const categories_ = categories.map((category, index) => {
+      size.width += 1;
+      let depth = 0;
       category.id = index;
       category.options = category.options.map((option, index) => {
+        depth += 1;
         option.id = index;
         return Object.values(option);
       });
+      if (depth > size.depth) size.depth = depth;
       return Object.values(category);
     });
     await pollFactory.createPoll.call([
@@ -69,7 +74,11 @@ const SetupDialog = ({ toggleSetupDialog, signer, pollFactory, getLatest }) => {
       startEnd_,
       categories_,
       addresses_,
-    ])({ signer: signer, gas: 1000000, maxTxFee: 3.75 });
+    ])({
+      signer: signer,
+      gas: 1000000,
+      maxTxFee: Math.ceil((size.width * size.depth * 20) / 100),
+    });
     getLatest();
     toggleSetupDialog(false);
   };

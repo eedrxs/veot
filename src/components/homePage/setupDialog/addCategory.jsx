@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
-const AddCategory = ({ onAddCategory }) => {
+const AddCategory = ({ onAddCategory, scroll }) => {
   const input = useRef();
   const button = useRef();
 
@@ -26,6 +26,7 @@ const AddCategory = ({ onAddCategory }) => {
         onClick={() => {
           onAddCategory(input.current.value);
           input.current.value = "";
+          setTimeout(() => (scroll.current.scrollTop += 1000), 50);
         }}
       >
         <FontAwesomeIcon icon={faPlusCircle} />
