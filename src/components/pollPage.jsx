@@ -2,7 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Contract, ContractClient } from "../libs/contraption";
 import { POLL_ABI } from "../contracts/abi/abi";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft, faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowLeft,
+  faArrowRight,
+  faEllipsisVertical,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -30,7 +34,8 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
   const [categories, setCategories] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [votes, setVotes] = useState([]);
-  const [chartData, setChartData] = useState({});
+  const [dropdownOption, setDropdownOption] = useState("Stats");
+  const [isDropdown, setIsDropdown] = useState(false);
   const colorArray = [
     "#FF6633",
     "#FFB399",
@@ -90,7 +95,7 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
   let status = details[3];
   // let votes = details[4];
   let isOpen = details[5];
-  let isEligible = details[6];
+  // let isEligible = details[6];
   let pollId = details[7];
 
   useEffect(() => {
@@ -153,21 +158,29 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
                 #{pollId}
               </p>
             </div>
-            <div className="flex flex-row gap-x-2 justify-between w-full h-1 mt-2">
-              {categories.map(category => (
-                <div
-                  key={category[0]}
-                  className={
-                    "bg-white w-13p flex-grow rounded-full" +
-                    (currentPage === +category[0]
-                      ? " bg-opacity-100"
-                      : " bg-opacity-50")
-                  }
-                  onClick={() => {
-                    setCurrentPage(+category[0]);
-                  }}
-                ></div>
-              ))}
+            <div className="relative w-full mt-2">
+              <div className="absolute flex gap-x-2 w-full top-0 left-0">
+                {categories.map(category => (
+                  <div
+                    key={category[0]}
+                    className={
+                      "bg-white w-13p flex-grow h-1 rounded-full" +
+                      (currentPage === +category[0]
+                        ? " bg-opacity-100"
+                        : " bg-opacity-50")
+                    }
+                    onClick={() => {
+                      setCurrentPage(+category[0]);
+                    }}
+                    onMouseOver={event => {
+                      event.target.style.height = "6px";
+                    }}
+                    onMouseLeave={event => {
+                      event.target.style.height = "4px";
+                    }}
+                  ></div>
+                ))}
+              </div>
             </div>
             <div className="bg-blue rounded-tl-2xl rounded-tr-2xl mt-3 pt-3 pb-12 lg:pb-14 flex-grow">
               {categories.length !== 0 ? (
@@ -213,8 +226,9 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
                         setVotes(votes_);
                       }}
                     >
-                      <small>{index + 1}.</small> {option[2]}{" "}
+                      {/* <small>{index + 1}.</small>  */}
                       {/* Option text */}
+                      {option[2]}
                       <span className="block absolute top-1 right-4 text-white text-opacity-70 text-sm lg:text-lg">
                         {option[1]} {/* Votes */}
                       </span>
@@ -258,13 +272,117 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
           </button>
         </div>
       </div>
-      <div className="fixed lg:flex lg:flex-col justify-center top-0 right-0 bg-blue h-full w-35p hidden text-white text-3xl">
+      <div
+        className={
+          "fixed top-0 right-0 bg-blue h-full w-35p hidden lg:block text-white text-3xl" +
+          (dropdownOption === "Details"
+            ? ""
+            : " lg:flex lg:flex-col justify-center ")
+        }
+      >
         {categories.length !== 0 ? (
-          <BarChart
-            category={categories[currentPage][1]}
-            options={categories[currentPage][2]}
-            colorArray={colorArray}
-          />
+          <React.Fragment>
+            <div className="flex justify-between items-center text-2xl px-5 py-2 border-b-2 border-white border-opacity-20 text-opacity-50">
+              <p>{dropdownOption}</p>
+              <button
+                className={
+                  "relative h-10 w-10 hover:bg-white hover:bg-opacity-20 rounded-full" +
+                  (isDropdown ? " bg-white bg-opacity-20" : "")
+                }
+                onClick={() => setIsDropdown(!isDropdown)}
+              >
+                <FontAwesomeIcon icon={faEllipsisVertical} />
+                {isDropdown ? (
+                  <div className="absolute -bottom-20 right-0 bg-blue text-lg w-28 border border-white border-opacity-20">
+                    <div
+                      className="hover:bg-white hover:bg-opacity-20 py-1"
+                      onClick={() => setDropdownOption("Stats")}
+                    >
+                      Stats
+                    </div>
+                    <div
+                      className="hover:bg-white hover:bg-opacity-20 py-1"
+                      onClick={() => setDropdownOption("Details")}
+                    >
+                      Details
+                    </div>
+                  </div>
+                ) : null}
+              </button>
+            </div>
+            {(key => {
+              switch (key) {
+                case "Stats":
+                  return (
+                    <div className="flex flex-col flex-grow justify-center">
+                      <BarChart
+                        category={categories[currentPage][1]}
+                        options={categories[currentPage][2]}
+                        colorArray={colorArray}
+                      />
+                    </div>
+                  );
+
+                case "Details":
+                  return (
+                    <div className="text-base px-5 mt-6">
+                      <p>
+                        Title: <b>{titleDesc[0]}</b>
+                      </p>
+                      <p>
+                        Description: <b>{titleDesc[1]}</b>
+                      </p>
+                      {!startEnd.length ? (
+                        <p>
+                          Duration: <b>Timeless</b>
+                        </p>
+                      ) : (
+                        <React.Fragment>
+                          <p>
+                            Starts:{" "}
+                            <b>{new Date(startEnd[0] * 1000).toDateString()}</b>
+                          </p>
+                          <p>
+                            Ends:{" "}
+                            <b>{new Date(startEnd[1] * 1000).toDateString()}</b>
+                          </p>
+                        </React.Fragment>
+                      )}
+                      <p>
+                        Participation: <b>{isOpen ? "Open" : "Closed"}</b>
+                      </p>
+                      <p>
+                        Creation time:{" "}
+                        <b>{new Date(creationTime * 1000).toDateString()}</b>
+                      </p>
+                      <p>
+                        Status:{" "}
+                        <b>
+                          {(statusCode => {
+                            switch (statusCode) {
+                              case "0":
+                                return "Upcoming";
+                              case "1":
+                                return "Ongoing";
+                              case "2":
+                                return "Ended";
+                              default:
+                                break;
+                            }
+                          })(status)}
+                        </b>
+                      </p>
+                      <p>
+                        Poll ID: <b>{pollId}</b>
+                      </p>
+                    </div>
+                  );
+
+                default:
+                  break;
+              }
+            })(dropdownOption)}
+          </React.Fragment>
         ) : null}
       </div>
     </main>
@@ -273,12 +391,12 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
 
 export const BarChart = ({ category, options, colorArray }) => {
   let chartData = {
-    labels: options.map(option => +option[0] + 1),
+    labels: options.map(option => option[2]),
     datasets: [
       {
         label: "Votes", //options[1],
         data: options.map(option => option[1]),
-        backgroundColor: options.map((option, index) => colorArray[index + 6]),
+        backgroundColor: options.map((option, index) => colorArray[index + 8]),
       },
     ],
   };
@@ -287,12 +405,34 @@ export const BarChart = ({ category, options, colorArray }) => {
     responsive: true,
     plugins: {
       legend: {
-        display: true,
+        display: false,
         position: "top",
       },
       title: {
         display: true,
         text: category,
+      },
+    },
+    scales: {
+      y: {
+        ticks: {
+          color: "#ffffff4d",
+          precision: 0,
+        },
+        grid: {
+          color: "#ffffff14",
+          borderColor: "#ffffff1a",
+        },
+      },
+      x: {
+        ticks: {
+          color: "#ffffff4d",
+          precision: 0,
+        },
+        grid: {
+          color: "#ffffff14",
+          borderColor: "#ffffff1a",
+        },
       },
     },
   };

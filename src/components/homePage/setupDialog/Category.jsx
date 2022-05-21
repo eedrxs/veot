@@ -47,7 +47,7 @@ const Category = ({
           />
           <FontAwesomeIcon
             icon={faMinusCircle}
-            className="absolute top-2 right-2 text-red-500 hover:text-red-600 text-3xl"
+            className="absolute top-2 right-2 text-red-500 hover:text-red-600 shadow-redbutton text-3xl rounded-full"
             onClick={() => {
               onRemoveOption(index, categoryId);
               scroll.current.topScroll -= 68;

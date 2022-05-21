@@ -64,6 +64,8 @@ module.exports = {
     },
     boxShadow: {
       goldbutton: "0 6px 25px -5px #e4990381",
+      greenbutton: "0 9px 8px -5px #1fba747a",
+      redbutton: "0 9px 8px -5px #ef444469",
     },
   },
   variants: {
