@@ -282,7 +282,7 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
       >
         {categories.length !== 0 ? (
           <React.Fragment>
-            <div className="flex justify-between items-center text-2xl px-5 py-2 border-b-2 border-white border-opacity-20 text-opacity-50">
+            <div className="flex justify-between items-center text-2xl px-5 py-2 border-b-2 border-white border-opacity-20 text-white text-opacity-60">
               <p>{dropdownOption}</p>
               <button
                 className={
@@ -325,55 +325,59 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
 
                 case "Details":
                   return (
-                    <div className="text-base px-5 mt-6">
-                      <p>
-                        Title: <b>{titleDesc[0]}</b>
+                    <div className="text-base px-5 mt-6 text-white text-opacity-70">
+                      <p className="mb-2">
+                        <b>Title:</b> {titleDesc[0]}
                       </p>
-                      <p>
-                        Description: <b>{titleDesc[1]}</b>
+                      <p className="mb-2">
+                        <b>Description:</b> {titleDesc[1]}
                       </p>
                       {!startEnd.length ? (
-                        <p>
-                          Duration: <b>Timeless</b>
+                        <p className="mb-2">
+                          <b>Duration:</b> Timeless
                         </p>
                       ) : (
                         <React.Fragment>
-                          <p>
-                            Starts:{" "}
-                            <b>{new Date(startEnd[0] * 1000).toDateString()}</b>
+                          <p className="mb-2">
+                            <b>Starts:</b>{" "}
+                            {new Date(startEnd[0] * 1000).toDateString() +
+                              ",   " +
+                              new Date(startEnd[0] * 1000).toLocaleTimeString()}
                           </p>
-                          <p>
-                            Ends:{" "}
-                            <b>{new Date(startEnd[1] * 1000).toDateString()}</b>
+                          <p className="mb-2">
+                            <b>Ends:</b>{" "}
+                            {new Date(startEnd[1] * 1000).toDateString() +
+                              ",   " +
+                              new Date(startEnd[1] * 1000).toLocaleTimeString()}
                           </p>
                         </React.Fragment>
                       )}
-                      <p>
-                        Participation: <b>{isOpen ? "Open" : "Closed"}</b>
+                      <p className="mb-2">
+                        <b>Participation:</b> {isOpen ? "Open" : "Closed"}
                       </p>
-                      <p>
-                        Creation time:{" "}
-                        <b>{new Date(creationTime * 1000).toDateString()}</b>
+                      <p className="mb-2">
+                        <b>Creation time:</b>{" "}
+                        {new Date(creationTime * 1000).toDateString() +
+                          ",   " +
+                          new Date(creationTime * 1000).toLocaleTimeString()}
                       </p>
-                      <p>
-                        Status:{" "}
-                        <b>
-                          {(statusCode => {
-                            switch (statusCode) {
-                              case "0":
-                                return "Upcoming";
-                              case "1":
-                                return "Ongoing";
-                              case "2":
-                                return "Ended";
-                              default:
-                                break;
-                            }
-                          })(status)}
-                        </b>
+                      <p className="mb-2">
+                        <b>Status:</b>{" "}
+                        {(statusCode => {
+                          switch (statusCode) {
+                            case "0":
+                              return "Upcoming";
+                            case "1":
+                              return "Ongoing";
+                            case "2":
+                              return "Ended";
+                            default:
+                              break;
+                          }
+                        })(status)}
                       </p>
-                      <p>
-                        Poll ID: <b>{pollId}</b>
+                      <p className="mb-2">
+                        <b>Poll ID:</b> {pollId}
                       </p>
                     </div>
                   );
