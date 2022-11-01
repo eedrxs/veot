@@ -103,7 +103,7 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
       let { 0: totalVotes, 1: categories } =
         await pollContractClient.getOptionsAndVotes.call()({
           gas: 1000000,
-          maxQueryPay: 0.75,
+          maxQueryPay: 1.5,
         });
       setVotes(new Array(categories.length).fill(undefined));
       setTotalVotes(totalVotes);
@@ -119,7 +119,7 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
     let { 0: totalVotes, 1: currentVotes } =
       await pollContractClient.getCurrentVotes.call()({
         gas: 1000000,
-        maxQueryPay: 0.75,
+        maxQueryPay: 1.5,
       });
     let categories_ = JSON.parse(JSON.stringify(categories));
     for (let i = 0; i < currentVotes.length; i++) {

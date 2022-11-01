@@ -147,8 +147,8 @@ export class ContractClient {
               const contractQueryTx = new ContractCallQuery()
                 .setContractId(this.contractId)
                 .setFunctionParameters(encodedParametersHex)
-                .setQueryPayment(new Hbar(_.maxQueryPay))
-                // .setMaxQueryPayment(new Hbar(_.maxQueryPay))
+                //.setQueryPayment(new Hbar(_.maxQueryPay))
+                .setMaxQueryPayment(new Hbar(_.maxQueryPay))
                 .setGas(_.gas);
               const contractQuerySubmit = await contractQueryTx.execute(
                 this.client

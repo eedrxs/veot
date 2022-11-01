@@ -25,7 +25,7 @@ const ViewPoll = ({
       input.current.value,
     ])({
       gas: 1000000,
-      maxQueryPay: 0.75,
+      maxQueryPay: 1.5,
     });
     setSelectedPoll(poll);
   }
@@ -33,7 +33,7 @@ const ViewPoll = ({
   async function joinPoll(pollId) {
     let { 0: address } = await pollFactoryClient.getPollAddress.call([pollId])({
       gas: 1000000,
-      maxQueryPay: 0.75,
+      maxQueryPay: 1.5,
     });
     setJoinedPoll({
       address: AccountId.fromSolidityAddress(address).toString(),
