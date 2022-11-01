@@ -1,22 +1,22 @@
-import {
+const {
   Client,
   AccountId,
   PrivateKey,
   ContractCallQuery,
   ContractExecuteTransaction,
   Hbar,
-} from "@hashgraph/sdk";
-import Web3 from "web3";
+} = require("@hashgraph/sdk");
+const Web3 = require("web3");
 
 const web3 = new Web3();
 
-export function createClient(accountId, privateKey) {
+function createClient(accountId, privateKey) {
   const operatorId = AccountId.fromString(accountId);
   const operatorKey = PrivateKey.fromString(privateKey);
   return Client.forTestnet().setOperator(operatorId, operatorKey);
 }
 
-export class SignerContract {
+class SignerContract {
   constructor(contractId, contractAbi) {
     this.contractId = contractId;
     this.contractAbi = contractAbi;
@@ -79,7 +79,7 @@ export class SignerContract {
   }
 }
 
-export class ClientContract {
+class ClientContract {
   constructor(contractId, contractAbi) {
     this.contractId = contractId;
     this.contractAbi = contractAbi;
@@ -138,3 +138,5 @@ export class ClientContract {
     });
   }
 }
+
+module.exports = { createClient, SignerContract, ClientContract }

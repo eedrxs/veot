@@ -13,7 +13,7 @@ const web3 = new Web3();
 export function createClient(
   accountId,
   privateKey,
-  _ = { maxTxFee: 0.75, maxQryPay: 0.01 }
+  _ = { maxTxFee: 0.75, maxQryPay: 2 }
 ) {
   const operatorId = AccountId.fromString(accountId);
   const operatorKey = PrivateKey.fromString(privateKey);

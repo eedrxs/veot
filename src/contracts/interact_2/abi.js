@@ -1,5 +1,5 @@
-export const POLLFACTORY_ID = "0.0.34817401"; //"0.0.34817328"; //"0.0.34224232";
-export const POLLFACTORY_READABLE_ABI = [
+const POLLFACTORY_ID = "0.0.34817401"; //"0.0.34817328"; //"0.0.34224232";
+const POLLFACTORY_READABLE_ABI = [
   "function createPoll(string[] titleDesc_, uint[] startEnd_, tuple(uint8 id, string text, tuple(uint8 id, string text)[] options)[] categories_, address[] participation_)",
   "function queryPoll(uint pollId) view returns(tuple(string[] titleDesc, uint[] startEnd, uint creationTime, uint8 pollStatus, uint votes, bool isOpen, bool isEligible))",
   "function fetchPolls(uint pollId, uint8 n) view returns(tuple(string[] titleDesc, uint[] startEnd, uint creationTime, uint8 pollStatus, uint votes, bool isOpen, bool isEligible)[])",
@@ -19,7 +19,7 @@ export const POLLFACTORY_READABLE_ABI = [
 //   "function currentTime() public view returns(uint)",
 //   "event pollCreated(uint indexed pollCount)"
 // ];
-export const POLLFACTORY_ABI = [
+const POLLFACTORY_ABI = [
   {
     inputs: [
       {
@@ -282,7 +282,8 @@ export const POLLFACTORY_ABI = [
     type: "function",
   },
 ];
-export const POLL_ABI = [
+
+const POLL_ABI = [
   {
     inputs: [
       {
@@ -529,3 +530,5 @@ export const POLL_ABI = [
     type: "function",
   },
 ];
+
+module.exports = { POLLFACTORY_ABI, POLLFACTORY_ID, POLLFACTORY_READABLE_ABI, POLL_ABI }
