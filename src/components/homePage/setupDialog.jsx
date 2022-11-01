@@ -52,8 +52,8 @@ const SetupDialog = ({ toggleSetupDialog, signer, pollFactory, getLatest }) => {
     const titleDesc_ = Object.values(titleDesc);
     const startEnd_ = isTimed
       ? Object.values(duration).map(date =>
-          parseInt(new Date(date).getTime() / 1000.0)
-        )
+        parseInt(new Date(date).getTime() / 1000.0)
+      )
       : [];
     const addresses_ = isClosed ? [...addresses] : [];
     let size = { width: 0, depth: 0 };
@@ -69,6 +69,7 @@ const SetupDialog = ({ toggleSetupDialog, signer, pollFactory, getLatest }) => {
       if (depth > size.depth) size.depth = depth;
       return Object.values(category);
     });
+    console.log({ categories_ })
     await pollFactory.createPoll.call([
       titleDesc_,
       startEnd_,
