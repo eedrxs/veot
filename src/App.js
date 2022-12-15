@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { ConnectPage, HomePage, PollPage } from "./components/index";
 
 const App = () => {
@@ -7,7 +7,7 @@ const App = () => {
 
   if (!signer) return <ConnectPage setSigner={setSigner} />;
   return (
-    <React.Fragment>
+    <>
       <HomePage signer={signer} setJoinedPoll={setJoinedPoll} />
       {joinedPoll ? (
         <PollPage
@@ -17,7 +17,7 @@ const App = () => {
           signer={signer}
         />
       ) : null}
-    </React.Fragment>
+    </>
   );
 };
 

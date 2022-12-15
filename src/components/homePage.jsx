@@ -17,14 +17,14 @@ const HomePage = ({ signer, setJoinedPoll }) => {
       if (pollCount != null) return;
       let { 0: pollCount_ } = await pollFactoryClient.getPollCount.call()({
         gas: 1000000,
-        maxQueryPay: 1.5,
+        maxQueryPay: 2,
       });
       let { 0: polls_ } = await pollFactoryClient.fetchPolls.call([
         pollCount_,
         5,
       ])({
         gas: 1000000,
-        maxQueryPay: 1.5,
+        maxQueryPay: 2,
       });
       setEarliestPoll(+polls_[polls_.length - 1][7]);
       setPolls(polls_);
@@ -40,7 +40,7 @@ const HomePage = ({ signer, setJoinedPoll }) => {
       quantity,
     ])({
       gas: 1000000,
-      maxQueryPay: 1.5,
+      maxQueryPay: 2,
     });
     let _polls = [...polls].concat(polls_);
     setEarliestPoll(+polls_[polls_.length - 1][7]);
@@ -50,7 +50,7 @@ const HomePage = ({ signer, setJoinedPoll }) => {
   async function getLatest() {
     let { 0: pollCount_ } = await pollFactoryClient.getPollCount.call()({
       gas: 1000000,
-      maxQueryPay: 1.5,
+      maxQueryPay: 2,
     });
     if (+pollCount_ > +pollCount) {
       setPollCount(pollCount_);
@@ -59,7 +59,7 @@ const HomePage = ({ signer, setJoinedPoll }) => {
         pollCount_ - pollCount,
       ])({
         gas: 1000000,
-        maxQueryPay: 1.5,
+        maxQueryPay: 2,
       });
       let _polls = [...polls_, ...polls];
       setPolls(_polls);

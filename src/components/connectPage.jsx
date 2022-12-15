@@ -2,7 +2,7 @@ import React from "react";
 import { HashConnect } from "hashconnect";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter, faGithub } from "@fortawesome/free-brands-svg-icons";
-import logo from "../img/logo.svg";
+//import logo from "../img/logo.svg";
 
 let saveData = {
   topic: "",
