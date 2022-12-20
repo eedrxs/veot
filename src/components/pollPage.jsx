@@ -103,7 +103,7 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
       let { 0: totalVotes, 1: categories } =
         await pollContractClient.getOptionsAndVotes.call()({
           gas: 1000000,
-          maxQueryPay: 1.5,
+          maxQueryPay: 3,
         });
       setVotes(new Array(categories.length).fill(undefined));
       setTotalVotes(totalVotes);
@@ -112,14 +112,14 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
   }, []);
 
   function completedSelection() {
-    return votes.some(categoryVote => categoryVote === undefined);
+    return votes.some((categoryVote) => categoryVote === undefined);
   }
 
   async function getCurrentVotes() {
     let { 0: totalVotes, 1: currentVotes } =
       await pollContractClient.getCurrentVotes.call()({
         gas: 1000000,
-        maxQueryPay: 1.5,
+        maxQueryPay: 3,
       });
     let categories_ = JSON.parse(JSON.stringify(categories));
     for (let i = 0; i < currentVotes.length; i++) {
@@ -160,7 +160,7 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
             </div>
             <div className="relative w-full mt-2">
               <div className="absolute flex gap-x-2 w-full top-0 left-0">
-                {categories.map(category => (
+                {categories.map((category) => (
                   <div
                     key={category[0]}
                     className={
@@ -172,10 +172,10 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
                     onClick={() => {
                       setCurrentPage(+category[0]);
                     }}
-                    onMouseOver={event => {
+                    onMouseOver={(event) => {
                       event.target.style.height = "6px";
                     }}
-                    onMouseLeave={event => {
+                    onMouseLeave={(event) => {
                       event.target.style.height = "4px";
                     }}
                   ></div>
@@ -310,7 +310,7 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
                 ) : null}
               </button>
             </div>
-            {(key => {
+            {((key) => {
               switch (key) {
                 case "Stats":
                   return (
@@ -363,7 +363,7 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
                       </p>
                       <p className="mb-2">
                         <b>Status:</b>{" "}
-                        {(statusCode => {
+                        {((statusCode) => {
                           switch (statusCode) {
                             case "0":
                               return "Upcoming";
@@ -395,11 +395,11 @@ const PollPage = ({ details, address, setJoinedPoll, signer }) => {
 
 export const BarChart = ({ category, options, colorArray }) => {
   let chartData = {
-    labels: options.map(option => option[2]),
+    labels: options.map((option) => option[2]),
     datasets: [
       {
         label: "Votes", //options[1],
-        data: options.map(option => option[1]),
+        data: options.map((option) => option[1]),
         backgroundColor: options.map((option, index) => colorArray[index + 8]),
       },
     ],
